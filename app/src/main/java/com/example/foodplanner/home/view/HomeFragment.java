@@ -1,4 +1,4 @@
-package com.example.foodplanner;
+package com.example.foodplanner.home.view;
 
 import android.os.Bundle;
 
@@ -9,12 +9,14 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
+
+import com.example.foodplanner.R;
+import com.example.foodplanner.model.Test;
+import com.example.foodplanner.presenter.HomeListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

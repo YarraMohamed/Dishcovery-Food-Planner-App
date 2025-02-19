@@ -1,4 +1,4 @@
-package com.example.foodplanner;
+package com.example.foodplanner.search.view;
 
 import android.os.Bundle;
 
@@ -11,6 +11,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.foodplanner.R;
+import com.example.foodplanner.presenter.HomeListAdapter;
+import com.example.foodplanner.model.Test;
 
 import java.util.ArrayList;
 import java.util.List;

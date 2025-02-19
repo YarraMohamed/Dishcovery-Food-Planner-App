@@ -1,4 +1,4 @@
-package com.example.foodplanner;
+package com.example.foodplanner.view;
 
 import android.os.Bundle;
 
@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.example.foodplanner.R;
 
 public class SplashScreenFragment extends Fragment {
 

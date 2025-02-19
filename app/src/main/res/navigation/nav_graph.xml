@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.foodplanner.LoginFragment"
+        android:name="com.example.foodplanner.auth.view.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="com.example.foodplanner.SignUpFragment"
+        android:name="com.example.foodplanner.auth.view.SignUpFragment"
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up" >
         <action
@@ -33,7 +33,7 @@
     </fragment>
     <fragment
         android:id="@+id/splashScreenFragment"
-        android:name="com.example.foodplanner.SplashScreenFragment"
+        android:name="com.example.foodplanner.view.SplashScreenFragment"
         android:label="fragment_splash_screen"
         tools:layout="@layout/fragment_splash_screen" >
         <action
@@ -44,7 +44,7 @@
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.foodplanner.HomeFragment"
+        android:name="com.example.foodplanner.home.view.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -53,7 +53,7 @@
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.foodplanner.ProfileFragment"
+        android:name="com.example.foodplanner.profile.view.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" >
         <action
@@ -66,22 +66,22 @@
 
     <fragment
         android:id="@+id/favouritesFragment"
-        android:name="com.example.foodplanner.FavouritesFragment"
+        android:name="com.example.foodplanner.favourites.view.FavouritesFragment"
         android:label="fragment_favourites"
         tools:layout="@layout/fragment_favourites" />
     <fragment
         android:id="@+id/scheduleFragment"
-        android:name="com.example.foodplanner.ScheduleFragment"
+        android:name="com.example.foodplanner.plannedMeals.view.ScheduleFragment"
         android:label="fragment_schedule"
         tools:layout="@layout/fragment_schedule" />
     <fragment
         android:id="@+id/itemFragment"
-        android:name="com.example.foodplanner.ItemFragment"
+        android:name="com.example.foodplanner.meal.view.ItemFragment"
         android:label="fragment_item"
         tools:layout="@layout/fragment_item" />
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.example.foodplanner.SearchFragment"
+        android:name="com.example.foodplanner.search.view.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" />
 </navigation>

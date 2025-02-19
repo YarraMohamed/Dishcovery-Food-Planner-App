@@ -1,4 +1,4 @@
-package com.example.foodplanner;
+package com.example.foodplanner.favourites.view;
 
 import android.os.Bundle;
 
@@ -12,9 +12,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.foodplanner.R;
+import com.example.foodplanner.model.Test;
+
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 public class FavouritesFragment extends Fragment {

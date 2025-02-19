@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:fillViewport="true"
-    tools:context=".ItemFragment" >
+    tools:context=".meal.view.ItemFragment" >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/itemLayout"

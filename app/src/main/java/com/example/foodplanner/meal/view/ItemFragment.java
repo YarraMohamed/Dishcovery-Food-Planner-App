@@ -1,4 +1,4 @@
-package com.example.foodplanner;
+package com.example.foodplanner.meal.view;
 
 import android.os.Bundle;
 
@@ -12,13 +12,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.foodplanner.R;
+import com.example.foodplanner.model.Test;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class ItemFragment extends Fragment {
 
-    itemsAdpater itemsAdpater;
+    com.example.foodplanner.meal.view.itemsAdpater itemsAdpater;
     List<Test> ing;
     RecyclerView ingredientsRecycle;
     public ItemFragment() {

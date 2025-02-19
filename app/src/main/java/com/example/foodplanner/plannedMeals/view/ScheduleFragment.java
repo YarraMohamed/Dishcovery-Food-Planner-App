@@ -1,22 +1,23 @@
-package com.example.foodplanner;
+package com.example.foodplanner.plannedMeals.view;
 
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-public class SignUpFragment extends Fragment {
+import com.example.foodplanner.R;
+import com.prolificinteractive.materialcalendarview.CalendarDay;
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 
-    TextView logintxt;
+public class ScheduleFragment extends Fragment {
 
-    public SignUpFragment() {
+
+    public ScheduleFragment() {
         // Required empty public constructor
     }
 
@@ -30,16 +31,15 @@ public class SignUpFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sign_up, container, false);
+        return inflater.inflate(R.layout.fragment_schedule, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        logintxt = view.findViewById(R.id.logintxt);
-        logintxt.setOnClickListener(v -> {
-            Navigation.findNavController(view).navigate(R.id.action_signUpFragment_to_loginFragment);
-        });
+        MaterialCalendarView calendarView = view.findViewById(R.id.Calender);
+        calendarView.setCurrentDate(CalendarDay.today());
+        calendarView.setSelectedDate(CalendarDay.today());
     }
 }

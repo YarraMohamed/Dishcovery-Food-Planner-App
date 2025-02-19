@@ -1,4 +1,4 @@
-package com.example.foodplanner;
+package com.example.foodplanner.auth.view;
 
 import android.os.Bundle;
 
@@ -11,11 +11,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
-public class ProfileFragment extends Fragment {
+import com.example.foodplanner.R;
 
-    public ProfileFragment() {
-        // Required empty public constructor
+public class LoginFragment extends Fragment {
+
+    TextView signUpTxt;
+    Button Loginbtn;
+    public LoginFragment() {
     }
 
     @Override
@@ -26,13 +30,20 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        return inflater.inflate(R.layout.fragment_login, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        signUpTxt = view.findViewById(R.id.signUpTxt);
+        signUpTxt.setOnClickListener(v -> {
+            Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_signUpFragment);
+        });
 
+        Loginbtn = view.findViewById(R.id.Loginbtn);
+        Loginbtn.setOnClickListener(v -> {
+            Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_homeFragment);
+        });
     }
 }
