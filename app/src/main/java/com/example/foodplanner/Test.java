@@ -4,6 +4,7 @@ public class Test {
     String name;
     String Category;
     String Country;
+    String measures;
 
     public Test() {
     }
@@ -12,6 +13,11 @@ public class Test {
         this.name = name;
         Category = category;
         Country = country;
+    }
+
+    public Test(String name, String measures) {
+        this.name = name;
+        this.measures = measures;
     }
 
     public Test(String name) {
@@ -40,5 +46,13 @@ public class Test {
 
     public void setCountry(String country) {
         Country = country;
+    }
+
+    public String getMeasures() {
+        return measures;
+    }
+
+    public void setMeasures(String measures) {
+        this.measures = measures;
     }
 }
