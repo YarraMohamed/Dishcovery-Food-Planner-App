@@ -32,7 +32,7 @@
             style="@style/textAboveBG"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom |center"
+            android:layout_gravity="bottom|center"
             android:background="@drawable/text_bg_screen_small"
             android:textAlignment="center" />
     </com.google.android.material.card.MaterialCardView>
