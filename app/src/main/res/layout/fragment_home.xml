@@ -45,7 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            android:src="@drawable/fried_salmon_steak_cooked_green_600nw_2489026949" />
+            />
 
         <TextView
             android:id="@+id/MealName"
@@ -54,7 +54,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
             android:background="@drawable/text_bg_screens"
-            android:text="@string/meal_name"
             android:textAlignment="center" />
     </androidx.cardview.widget.CardView>
 

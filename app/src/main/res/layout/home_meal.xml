@@ -7,12 +7,14 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="5dp">
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/MealHomeCard"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:cardUseCompatPadding="true"
-        android:elevation="4dp"
+        app:strokeColor="@color/dark_red"
+        app:strokeWidth="2dp"
+        android:elevation="3dp"
         app:cardCornerRadius="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -22,16 +24,16 @@
             android:layout_width="200dp"
             android:layout_height="250dp"
             android:scaleType="centerCrop"
-            app:srcCompat="@drawable/fried_salmon_steak_cooked_green_600nw_2489026949" />
+            android:src="@drawable/fried_salmon_steak_cooked_green_600nw_2489026949"
+            />
 
         <TextView
             android:id="@+id/mealNameHome"
             style="@style/textAboveBG"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="bottom |center"
             android:background="@drawable/text_bg_screen_small"
-            android:text="@string/meal_name"
             android:textAlignment="center" />
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

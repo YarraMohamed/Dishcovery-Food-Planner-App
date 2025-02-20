@@ -51,11 +51,18 @@ public class SplashScreenFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         lottieAnimationView = view.findViewById(R.id.lottieAnimationView);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
         handler.postDelayed(navigateRunnable, SPLASH_SCREEN_TIME_OUT);
     }
 
-    public void onDestroyView() {
-        super.onDestroyView();
+    @Override
+    public void onStop() {
+        super.onStop();
         handler.removeCallbacks(navigateRunnable);
     }
+
 }

@@ -9,25 +9,35 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.foodplanner.R;
+import com.example.foodplanner.db.Repository;
+import com.example.foodplanner.db.remote.MealRemoteDataSource;
+import com.example.foodplanner.home.presenter.HomePresenter;
+import com.example.foodplanner.model.MealResponse;
 import com.example.foodplanner.model.Test;
-import com.example.foodplanner.presenter.HomeListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements HomeViewInterface {
 
-    HomeListAdapter homeListAdapter;
-    List<Test> meals;
-    RecyclerView recyclerView;
+    private static final String TAG = "HomeFragment";
+    private HomePresenter homePresenter;
+    private HomeListAdapter homeListAdapter;
+    private List<Test> meals;
+    private RecyclerView recyclerView;
+    private ImageView MealPhoto;
+    private TextView MealName;
 
-    ImageView MealPhoto;
 
     public HomeFragment() {
 
@@ -64,14 +74,34 @@ public class HomeFragment extends Fragment {
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         manager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerView.setLayoutManager(manager);
-        homeListAdapter = new HomeListAdapter(getActivity(),meals);
-        recyclerView.setAdapter(homeListAdapter);
-
-
+        homeListAdapter = new HomeListAdapter(getActivity());
         MealPhoto = view.findViewById(R.id.MealPhoto);
-        MealPhoto.setOnClickListener(v -> {
-            Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_itemFragment);
-        });
+
+        MealName = view.findViewById(R.id.MealName);
+        homePresenter = new HomePresenter(this, Repository.getRepoInstance(new MealRemoteDataSource()));
+        homePresenter.getRandomMeal();
+        homePresenter.getSuggestedMeals();
+    }
+
+    @Override
+    public void showRandomMeal(MealResponse mealResponse) {
+        Log.i(TAG, "showSuggestedMeal: " + mealResponse.getMeals().size());
+        MealName.setText(mealResponse.getMeals().get(0).getMealName());
+        Glide.with(getContext()).load(mealResponse.getMeals().get(0).getMealThumb())
+                .apply(new RequestOptions().override(200,200))
+                .into(MealPhoto);
+    }
+
+    @Override
+    public void showSuggestedMeal(MealResponse mealResponse) {
+        Log.i(TAG, "showSuggestedMeal: " + mealResponse.getMeals().size());
+        homeListAdapter.setMealResponse(mealResponse);
+        recyclerView.setAdapter(homeListAdapter);
+        homeListAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showError(String err) {
 
     }
 }

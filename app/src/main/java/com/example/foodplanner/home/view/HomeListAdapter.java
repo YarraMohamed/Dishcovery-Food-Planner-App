@@ -1,4 +1,4 @@
-package com.example.foodplanner.presenter;
+package com.example.foodplanner.home.view;
 
 import android.content.Context;
 import android.util.Log;
@@ -12,7 +12,10 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.foodplanner.R;
+import com.example.foodplanner.model.MealResponse;
 import com.example.foodplanner.model.Test;
 
 import java.util.List;
@@ -20,12 +23,10 @@ import java.util.List;
 public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHolder> {
 
     private Context context;
-    private List<Test> meals;
-
+    private MealResponse mealResponse;
     private static final String TAG = "HomeListAdapter";
-    public HomeListAdapter(Context context,List<Test> meals){
+    public HomeListAdapter(Context context){
         this.context=context;
-        this.meals=meals;
     }
 
     @Override
@@ -39,15 +40,23 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Log.i(TAG, "onBindViewHolder: ");
-        holder.mealNameHome.setText(meals.get(position).getName());
-        holder.mealPhoto.setImageResource(R.drawable.fried_salmon_steak_cooked_green_600nw_2489026949);
+        holder.mealNameHome.setText(mealResponse.getMeals().get(position).getMealName());
+        Glide.with(context).load(mealResponse.getMeals().get(position).getMealThumb())
+                .apply(new RequestOptions().override(200,200))
+                .into(holder.mealPhoto);
     }
 
     @Override
     public int getItemCount() {
-        Log.i(TAG, "getItemCount: "+ meals.size());
-        return meals.size();
+        return mealResponse.getMeals().size();
+    }
+
+    public MealResponse getMealResponse() {
+        return mealResponse;
+    }
+
+    public void setMealResponse(MealResponse mealResponse) {
+        this.mealResponse = mealResponse;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

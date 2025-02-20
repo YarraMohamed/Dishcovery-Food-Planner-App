@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.foodplanner.R;
-import com.example.foodplanner.presenter.HomeListAdapter;
+import com.example.foodplanner.home.view.HomeListAdapter;
 import com.example.foodplanner.model.Test;
 
 import java.util.ArrayList;
@@ -60,7 +60,7 @@ public class SearchFragment extends Fragment {
         GridLayoutManager manager = new GridLayoutManager(getContext(),2);
         manager.setOrientation(GridLayoutManager.VERTICAL);
         list.setLayoutManager(manager);
-        homeListAdapter = new HomeListAdapter(getContext(),meals);
+        homeListAdapter = new HomeListAdapter(getContext());
         list.setAdapter(homeListAdapter);
 
     }
