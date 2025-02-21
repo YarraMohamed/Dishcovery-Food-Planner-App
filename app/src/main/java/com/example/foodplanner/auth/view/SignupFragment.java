@@ -1,5 +1,6 @@
 package com.example.foodplanner.auth.view;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -60,7 +61,8 @@ public class SignupFragment extends Fragment implements AuthInterface {
         logintxt = view.findViewById(R.id.logintxt);
         GoogleBtn = view.findViewById(R.id.GoogleBtn);
 
-        authPresenter = new AuthPresenter(this);
+        authPresenter = new AuthPresenter(this,
+                requireContext().getSharedPreferences("credentials", Context.MODE_PRIVATE));
 
         setGoogleOptions();
 

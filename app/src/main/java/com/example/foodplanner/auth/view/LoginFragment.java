@@ -1,6 +1,8 @@
 package com.example.foodplanner.auth.view;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -31,7 +33,7 @@ public class LoginFragment extends Fragment implements AuthInterface {
     private EditText emailtxt,passwordTxt;
     private GoogleSignInClient googleSignInClient;
     private static final int RC_SIGN_IN = 9001;
-    AuthPresenter authPresenter;
+    private AuthPresenter authPresenter;
 
     public LoginFragment() {
     }
@@ -58,7 +60,9 @@ public class LoginFragment extends Fragment implements AuthInterface {
         Loginbtn = view.findViewById(R.id.Loginbtn);
         Skip = view.findViewById(R.id.Skip);
 
-        authPresenter = new AuthPresenter(this);
+        authPresenter = new AuthPresenter(this,
+                requireContext().getSharedPreferences("credentials", Context.MODE_PRIVATE));
+
         setGoogleOptions();
 
         Skip.setOnClickListener(v -> {
