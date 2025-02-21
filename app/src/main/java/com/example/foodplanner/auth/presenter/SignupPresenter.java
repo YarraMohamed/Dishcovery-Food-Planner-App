@@ -1,13 +1,13 @@
 package com.example.foodplanner.auth.presenter;
 
-import com.example.foodplanner.auth.view.SignupInterface;
+import com.example.foodplanner.auth.view.authInterface;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class SignupPresenter {
     private FirebaseAuth auth;
-    private SignupInterface signupInterface;
+    private authInterface signupInterface;
 
-    public SignupPresenter(SignupInterface signupInterface){
+    public SignupPresenter(authInterface signupInterface){
         this.signupInterface = signupInterface;
         auth = FirebaseAuth.getInstance();
     }
@@ -23,9 +23,9 @@ public class SignupPresenter {
           auth.createUserWithEmailAndPassword(email, password)
                   .addOnCompleteListener(command -> {
                       if(command.isSuccessful()){
-                          signupInterface.onSignupSuccess();
+                          signupInterface.onAuthSuccess();
                       }else{
-                          signupInterface.onSignupFailure(command.getException().getMessage());
+                          signupInterface.onAuthFailure(command.getException().getMessage());
                       }
                   });
       }

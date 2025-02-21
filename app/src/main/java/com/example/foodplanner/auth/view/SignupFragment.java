@@ -18,7 +18,7 @@ import android.widget.Toast;
 import com.example.foodplanner.R;
 import com.example.foodplanner.auth.presenter.SignupPresenter;
 
-public class SignupFragment extends Fragment implements SignupInterface {
+public class SignupFragment extends Fragment implements authInterface {
 
     private TextView logintxt;
     private EditText email, password;
@@ -64,13 +64,13 @@ public class SignupFragment extends Fragment implements SignupInterface {
     }
 
     @Override
-    public void onSignupSuccess() {
+    public void onAuthSuccess() {
         Toast.makeText(getContext(),"Signed Successfully",Toast.LENGTH_SHORT).show();
         Navigation.findNavController(requireView()).navigate(R.id.action_signUpFragment_to_homeFragment);
     }
 
     @Override
-    public void onSignupFailure(String errMsg) {
+    public void onAuthFailure(String errMsg) {
         Toast.makeText(getContext(),errMsg,Toast.LENGTH_SHORT).show();
     }
 

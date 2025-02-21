@@ -58,17 +58,6 @@ public class HomeFragment extends Fragment implements HomeViewInterface {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        meals = new ArrayList<>();
-        meals.add(new Test("test meal 1"));
-        meals.add(new Test("test meal 2"));
-        meals.add(new Test("test meal 3"));
-        meals.add(new Test("test meal 4"));
-        meals.add(new Test("test meal 5"));
-        meals.add(new Test("test meal 6"));
-        meals.add(new Test("test meal 7"));
-        meals.add(new Test("test meal 8"));
-
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
