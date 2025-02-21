@@ -1,5 +1,6 @@
 package com.example.foodplanner.auth.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,14 +17,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.foodplanner.R;
-import com.example.foodplanner.auth.presenter.LoginPresenter;
+import com.example.foodplanner.auth.presenter.AuthPresenter;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.Task;
 
-public class LoginFragment extends Fragment implements authInterface{
+public class LoginFragment extends Fragment implements AuthInterface {
 
-    TextView signUpTxt;
-    Button Loginbtn;
-    EditText emailtxt,passwordTxt;
-    LoginPresenter loginPresenter;
+    private TextView signUpTxt;
+    private Button Loginbtn, signInWithGoogleBtn,Skip;
+    private EditText emailtxt,passwordTxt;
+    private GoogleSignInClient googleSignInClient;
+    private static final int RC_SIGN_IN = 9001;
+    AuthPresenter authPresenter;
 
     public LoginFragment() {
     }
@@ -45,20 +53,53 @@ public class LoginFragment extends Fragment implements authInterface{
 
         emailtxt = view.findViewById(R.id.emailtxt);
         passwordTxt = view.findViewById(R.id.passwordTxt);
-        loginPresenter = new LoginPresenter(this);
-
         signUpTxt = view.findViewById(R.id.signUpTxt);
+        signInWithGoogleBtn = view.findViewById(R.id.signInWithGoogleBtn);
+        Loginbtn = view.findViewById(R.id.Loginbtn);
+        Skip = view.findViewById(R.id.Skip);
+
+        authPresenter = new AuthPresenter(this);
+        setGoogleOptions();
+
+        Skip.setOnClickListener(v -> {
+            Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_homeFragment);
+        });
+
         signUpTxt.setOnClickListener(v -> {
             Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_signUpFragment);
         });
 
-        Loginbtn = view.findViewById(R.id.Loginbtn);
+        signInWithGoogleBtn.setOnClickListener(v -> {
+            googleSignInClient.revokeAccess().addOnCompleteListener(task -> {
+                Intent signinIntent = googleSignInClient.getSignInIntent();
+                startActivityForResult(signinIntent,RC_SIGN_IN);
+            });
+        });
+
         Loginbtn.setOnClickListener(v -> {
             String email = emailtxt.getText().toString().trim();
             String password = passwordTxt.getText().toString().trim();
-            loginPresenter.Login(email,password);
+            authPresenter.Login(email,password);
 
         });
+    }
+
+    public void setGoogleOptions(){
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.web_id))
+                .requestEmail()
+                .build();
+
+        googleSignInClient = GoogleSignIn.getClient(requireContext(),gso);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == RC_SIGN_IN){
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            authPresenter.signInWithGoogle(task);
+        }
     }
 
     @Override

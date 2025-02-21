@@ -1,5 +1,6 @@
 package com.example.foodplanner.auth.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,14 +17,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.foodplanner.R;
-import com.example.foodplanner.auth.presenter.SignupPresenter;
+import com.example.foodplanner.auth.presenter.AuthPresenter;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.Task;
 
-public class SignupFragment extends Fragment implements authInterface {
+public class SignupFragment extends Fragment implements AuthInterface {
 
     private TextView logintxt;
     private EditText email, password;
-    private Button signUpBtn;
-    private SignupPresenter signupPresenter;
+    private Button signUpBtn, GoogleBtn;
+    private AuthPresenter authPresenter;
+    private GoogleSignInClient googleSignInClient;
+    private static final int RC_SIGN_IN = 9001;
 
     public SignupFragment() {
         // Required empty public constructor
@@ -49,9 +57,13 @@ public class SignupFragment extends Fragment implements authInterface {
         email = view.findViewById(R.id.email);
         password = view.findViewById(R.id.password);
         signUpBtn = view.findViewById(R.id.signUpBtn);
-        signupPresenter = new SignupPresenter(this);
-
         logintxt = view.findViewById(R.id.logintxt);
+        GoogleBtn = view.findViewById(R.id.GoogleBtn);
+
+        authPresenter = new AuthPresenter(this);
+
+        setGoogleOptions();
+
         logintxt.setOnClickListener(v -> {
             Navigation.findNavController(view).navigate(R.id.action_signUpFragment_to_loginFragment);
         });
@@ -59,8 +71,33 @@ public class SignupFragment extends Fragment implements authInterface {
         signUpBtn.setOnClickListener(v -> {
             String userEmail = email.getText().toString().trim();
             String userPassword = password.getText().toString().trim();
-            signupPresenter.signUp(userEmail,userPassword);
+            authPresenter.signUp(userEmail,userPassword);
         });
+
+        GoogleBtn.setOnClickListener(v -> {
+            googleSignInClient.revokeAccess().addOnCompleteListener(task -> {
+                Intent signUpIntent = googleSignInClient.getSignInIntent();
+                startActivityForResult(signUpIntent,RC_SIGN_IN);
+            });
+        });
+    }
+
+    public void setGoogleOptions(){
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.web_id))
+                .requestEmail()
+                .build();
+
+        googleSignInClient = GoogleSignIn.getClient(requireContext(),gso);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == RC_SIGN_IN){
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            authPresenter.signInWithGoogle(task);
+        }
     }
 
     @Override
@@ -83,4 +120,5 @@ public class SignupFragment extends Fragment implements authInterface {
     public void wrongPasswordInput() {
         password.setError("Password cannot be Empty");
     }
+
 }
