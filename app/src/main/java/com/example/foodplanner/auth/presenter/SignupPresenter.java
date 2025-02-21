@@ -21,11 +21,11 @@ public class SignupPresenter {
           return;
       } else {
           auth.createUserWithEmailAndPassword(email, password)
-                  .addOnCompleteListener(command -> {
-                      if(command.isSuccessful()){
+                  .addOnCompleteListener(task -> {
+                      if(task.isSuccessful()){
                           signupInterface.onAuthSuccess();
                       }else{
-                          signupInterface.onAuthFailure(command.getException().getMessage());
+                          signupInterface.onAuthFailure(task.getException().getMessage());
                       }
                   });
       }
