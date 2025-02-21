@@ -61,7 +61,7 @@ public class SearchFragment extends Fragment {
         manager.setOrientation(GridLayoutManager.VERTICAL);
         list.setLayoutManager(manager);
         homeListAdapter = new HomeListAdapter(getContext());
-        list.setAdapter(homeListAdapter);
+       // list.setAdapter(homeListAdapter);
 
     }
 }

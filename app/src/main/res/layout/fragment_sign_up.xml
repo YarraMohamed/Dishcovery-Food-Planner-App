@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".auth.view.SignUpFragment">
+    tools:context=".auth.view.SignupFragment">
 
     <ImageView
         android:id="@+id/Logo"
@@ -16,9 +16,9 @@
 
     <ImageView
         android:id="@+id/SignUpPhoto"
-        android:layout_width="300dp"
-        android:layout_height="250dp"
-        android:layout_marginTop="5dp"
+        android:layout_width="350dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="20dp"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -27,43 +27,22 @@
         app:srcCompat="@drawable/sign_up" />
 
     <TextView
-        android:id="@+id/usernameTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="69dp"
-        android:layout_marginTop="20dp"
-        android:text="@string/username"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/SignUpPhoto"
-        style="@style/TextView"/>
-
-    <EditText
-        android:id="@+id/username"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/text_bg_forms"
-        android:ems="10"
-        android:inputType="textEmailAddress"
-        app:layout_constraintStart_toStartOf="@id/usernameTxt"
-        app:layout_constraintTop_toBottomOf="@id/usernameTxt" />
-
-    <TextView
         android:id="@+id/emailTxt"
+        style="@style/TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="32dp"
         android:hint="@string/Hint"
         android:text="@string/email"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="@+id/username"
-        app:layout_constraintTop_toBottomOf="@+id/username"
-        style="@style/TextView"/>
+        app:layout_constraintStart_toStartOf="@+id/SignUpPhoto"
+        app:layout_constraintTop_toBottomOf="@+id/SignUpPhoto" />
 
     <EditText
         android:id="@+id/email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="12dp"
         android:background="@drawable/text_bg_forms"
         android:ems="10"
         android:hint="@string/Hint"
@@ -85,7 +64,7 @@
         android:id="@+id/password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="12dp"
         android:background="@drawable/text_bg_forms"
         android:ems="10"
         android:inputType="textPassword"
@@ -120,7 +99,7 @@
         android:id="@+id/divider"
         android:layout_width="300dp"
         android:layout_height="1dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="10dp"
         android:background="?android:attr/listDivider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
@@ -131,7 +110,7 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="25dp"
         android:layout_marginStart="56dp"
         android:fontFamily="@font/montserrat_medium"
         android:text="@string/have_account"
