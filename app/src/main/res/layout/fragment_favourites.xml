@@ -6,8 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".favourites.view.FavouritesFragment"
-    >
+    tools:context=".favourites.view.FavouritesFragment">
 
     <ImageView
         android:id="@+id/logo"
@@ -41,6 +40,33 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loginAnim"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.449"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/login_animation"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/loginAlert"
+        style="@style/TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:text="@string/please_login_first"
+        android:textColor="@color/dark_red"
+        app:layout_constraintStart_toStartOf="@+id/loginAnim"
+        app:layout_constraintTop_toBottomOf="@+id/loginAnim"
+        android:visibility="gone"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

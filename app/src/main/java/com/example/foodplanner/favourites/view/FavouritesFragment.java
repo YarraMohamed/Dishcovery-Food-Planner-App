@@ -11,9 +11,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.foodplanner.R;
+import com.example.foodplanner.favourites.presenter.FavouritesPresenter;
 import com.example.foodplanner.model.Test;
+import com.example.foodplanner.presenter.Presenter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,9 +25,13 @@ import java.util.List;
 
 public class FavouritesFragment extends Fragment {
 
-    FavouritesListAdapter favouritesListAdapter;
-    List<Test> favs;
-    RecyclerView Favourites;
+    private FavouritesListAdapter favouritesListAdapter;
+    private List<Test> favs;
+    private RecyclerView Favourites;
+    private FavouritesPresenter favouritesPresenter;
+    private Presenter presenter;
+    private LottieAnimationView loginAnim;
+    private TextView loginAlert;
 
     public FavouritesFragment() {
 
@@ -53,6 +61,9 @@ public class FavouritesFragment extends Fragment {
                 new Test("test meal 7","categoty 7","country 7")
         ));
 
+         loginAnim = view.findViewById(R.id.loginAnim);
+         loginAlert = view.findViewById(R.id.loginAlert);
+
         Favourites = view.findViewById(R.id.Favourites);
         Favourites.setHasFixedSize(true);
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
@@ -60,6 +71,17 @@ public class FavouritesFragment extends Fragment {
         Favourites.setLayoutManager(manager);
         favouritesListAdapter = new FavouritesListAdapter(getContext(),favs);
         Favourites.setAdapter(favouritesListAdapter);
+
+        presenter = new Presenter();
+        if(presenter.checkAuth()){
+            Favourites.setVisibility(View.VISIBLE);
+            loginAnim.setVisibility(View.GONE);
+            loginAlert.setVisibility(View.GONE);
+        }else{
+            Favourites.setVisibility(View.GONE);
+            loginAnim.setVisibility(View.VISIBLE);
+            loginAlert.setVisibility(View.VISIBLE);
+        }
 
     }
 }
