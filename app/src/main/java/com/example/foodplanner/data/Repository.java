@@ -1,7 +1,7 @@
-package com.example.foodplanner.db;
+package com.example.foodplanner.data;
 
-import com.example.foodplanner.db.remote.MealRemoteDataSource;
-import com.example.foodplanner.db.remote.NetworkCallback;
+import com.example.foodplanner.data.remote.MealRemoteDataSource;
+import com.example.foodplanner.data.remote.NetworkCallback;
 
 public class Repository {
    private MealRemoteDataSource mealRemoteDataSource;
@@ -24,5 +24,17 @@ public class Repository {
 
    public void getSuggestedMeals(NetworkCallback networkCallback){
        mealRemoteDataSource.getSuggestedMealsFromNetwork(networkCallback);
+   }
+
+   public void getCategories(NetworkCallback networkCallback){
+       mealRemoteDataSource.getCategories(networkCallback);
+   }
+
+   public void getIngredinets(NetworkCallback networkCallback){
+       mealRemoteDataSource.getIngredients(networkCallback);
+   }
+
+   public void getCountry(NetworkCallback networkCallback){
+       mealRemoteDataSource.getAreas(networkCallback);
    }
 }

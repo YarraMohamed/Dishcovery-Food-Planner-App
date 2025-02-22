@@ -1,9 +1,11 @@
 package com.example.foodplanner.home.presenter;
 
-import com.example.foodplanner.db.Repository;
-import com.example.foodplanner.db.remote.MealRemoteDataSource;
-import com.example.foodplanner.db.remote.NetworkCallback;
+import com.example.foodplanner.data.Repository;
+import com.example.foodplanner.data.remote.NetworkCallback;
 import com.example.foodplanner.home.view.HomeViewInterface;
+import com.example.foodplanner.model.AreaResponse;
+import com.example.foodplanner.model.CategoryResponse;
+import com.example.foodplanner.model.IngredientResponse;
 import com.example.foodplanner.model.MealResponse;
 
 public class HomePresenter implements NetworkCallback {
@@ -36,6 +38,20 @@ public class HomePresenter implements NetworkCallback {
     @Override
     public void onFailure(String errMsg) {
         homeViewInterface.showError(errMsg);
+    }
+
+    @Override
+    public void onShowCategories(CategoryResponse categoryResponse) {
+
+    }
+
+    @Override
+    public void onShowIngredients(IngredientResponse ingredientResponse) {
+
+    }
+
+    @Override
+    public void onShowAreas(AreaResponse areaResponse) {
 
     }
 

@@ -5,7 +5,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,13 +18,12 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.foodplanner.R;
-import com.example.foodplanner.db.Repository;
-import com.example.foodplanner.db.remote.MealRemoteDataSource;
+import com.example.foodplanner.data.Repository;
+import com.example.foodplanner.data.remote.MealRemoteDataSource;
 import com.example.foodplanner.home.presenter.HomePresenter;
 import com.example.foodplanner.model.MealResponse;
 import com.example.foodplanner.model.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class HomeFragment extends Fragment implements HomeViewInterface {
@@ -74,11 +72,12 @@ public class HomeFragment extends Fragment implements HomeViewInterface {
 
     @Override
     public void showRandomMeal(MealResponse mealResponse) {
-        Log.i(TAG, "showSuggestedMeal: " + mealResponse.getMeals().size());
-        MealName.setText(mealResponse.getMeals().get(0).getMealName());
-        Glide.with(getContext()).load(mealResponse.getMeals().get(0).getMealThumb())
-                .apply(new RequestOptions().override(200,200))
-                .into(MealPhoto);
+        if(isAdded() && getActivity()!=null){
+            MealName.setText(mealResponse.getMeals().get(0).getMealName());
+            Glide.with(requireContext()).load(mealResponse.getMeals().get(0).getMealThumb())
+                    .apply(new RequestOptions().override(200,200))
+                    .into(MealPhoto);
+        }
     }
 
     @Override

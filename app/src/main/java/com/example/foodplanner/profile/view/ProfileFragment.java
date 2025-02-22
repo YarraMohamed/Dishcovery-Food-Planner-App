@@ -1,7 +1,6 @@
 package com.example.foodplanner.profile.view;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,8 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.foodplanner.R;
-import com.example.foodplanner.search.presenter.ProfilePresenter;
-import com.google.firebase.auth.FirebaseAuth;
+import com.example.foodplanner.profile.presenter.ProfilePresenter;
 
 public class ProfileFragment extends Fragment implements ProfileInterface {
     Button backupBtn,logoutBtn,loginBtn;

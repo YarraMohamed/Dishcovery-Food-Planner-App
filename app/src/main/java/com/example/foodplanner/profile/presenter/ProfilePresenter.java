@@ -1,4 +1,4 @@
-package com.example.foodplanner.search.presenter;
+package com.example.foodplanner.profile.presenter;
 
 import android.content.SharedPreferences;
 
