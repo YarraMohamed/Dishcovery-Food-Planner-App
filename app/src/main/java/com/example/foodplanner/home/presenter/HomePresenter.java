@@ -55,4 +55,19 @@ public class HomePresenter implements NetworkCallback {
 
     }
 
+    @Override
+    public void onShowCategoryMeals(MealResponse mealResponse) {
+
+    }
+
+    @Override
+    public void onShowAreaMeals(MealResponse mealResponse) {
+
+    }
+
+    @Override
+    public void onShowIngMeals(MealResponse mealResponse) {
+
+    }
+
 }

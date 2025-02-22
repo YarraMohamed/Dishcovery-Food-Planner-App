@@ -28,6 +28,18 @@ public class SearchPresenter implements NetworkCallback {
     public void getCountries(){
         repository.getCountry(this);
     }
+
+    public void getCategoryMeal(String name){
+        repository.getCategoryMeals(this,name);
+    }
+
+    public void getAreaMeal(String name){
+        repository.getAreaMeals(this,name);
+    }
+    public void  getIngredientMeals(String name){
+        repository.getIngMeals(this,name);
+    }
+
     @Override
     public void onShowCategories(CategoryResponse categoryResponse) {
         searchViewInterface.showCategories(categoryResponse);
@@ -41,6 +53,21 @@ public class SearchPresenter implements NetworkCallback {
     @Override
     public void onShowAreas(AreaResponse areaResponse) {
         searchViewInterface.showArea(areaResponse);
+    }
+
+    @Override
+    public void onShowCategoryMeals(MealResponse mealResponse) {
+        searchViewInterface.showCategoryMeals(mealResponse);
+    }
+
+    @Override
+    public void onShowAreaMeals(MealResponse mealResponse) {
+        searchViewInterface.showAreaMeals(mealResponse);
+    }
+
+    @Override
+    public void onShowIngMeals(MealResponse mealResponse) {
+        searchViewInterface.showIngMeals(mealResponse);
     }
 
     @Override

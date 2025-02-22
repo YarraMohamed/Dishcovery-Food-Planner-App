@@ -20,6 +20,7 @@ import com.example.foodplanner.home.view.HomeListAdapter;
 import com.example.foodplanner.model.AreaResponse;
 import com.example.foodplanner.model.CategoryResponse;
 import com.example.foodplanner.model.IngredientResponse;
+import com.example.foodplanner.model.MealResponse;
 import com.example.foodplanner.model.Test;
 import com.example.foodplanner.search.presenter.SearchPresenter;
 import com.google.android.material.chip.Chip;
@@ -27,14 +28,12 @@ import com.google.android.material.chip.Chip;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchFragment extends Fragment  implements SearchViewInterface{
+public class SearchFragment extends Fragment  implements SearchViewInterface , FiltersClickListener{
 
-    RecyclerView list;
-    SearchPresenter searchPresenter;
-    CategoryAdpater categoryApdater;
-    IngredientAdpater ingredientAdpater;
-    CountryAdapter countryAdapter;
-    Chip categoryChip,countryChip,IngredientChip;
+    private RecyclerView list;
+    private SearchPresenter searchPresenter;
+    private SearchAdapter searchAdapter;
+    private Chip categoryChip,countryChip,IngredientChip;
     private static final String TAG = "SearchFragment";
 
     public SearchFragment() {
@@ -69,22 +68,18 @@ public class SearchFragment extends Fragment  implements SearchViewInterface{
         searchPresenter = new SearchPresenter(this,
                 Repository.getRepoInstance(new MealRemoteDataSource()));
 
-        categoryApdater = new CategoryAdpater(getContext());
-        ingredientAdpater = new IngredientAdpater(getContext());
-        countryAdapter = new CountryAdapter(getContext());
+        searchAdapter = new SearchAdapter(getContext(),this);
+        list.setAdapter(searchAdapter);
 
         categoryChip.setOnClickListener(v -> {
-            list.setAdapter(categoryApdater);
             searchPresenter.getCategories();;
         });
 
         IngredientChip.setOnClickListener(v -> {
-            list.setAdapter(ingredientAdpater);
             searchPresenter.getIngredients();
         });
 
         countryChip.setOnClickListener(v -> {
-            list.setAdapter(countryAdapter);
             searchPresenter.getCountries();
         });
 
@@ -92,24 +87,57 @@ public class SearchFragment extends Fragment  implements SearchViewInterface{
 
     @Override
     public void showCategories(CategoryResponse categoryResponse) {
-        categoryApdater.setCategories(categoryResponse.getCategories());
-        categoryApdater.notifyDataSetChanged();
+        searchAdapter.updateList(categoryResponse.getCategories());
+        list.scrollToPosition(0);
     }
 
     @Override
     public void showIngredients(IngredientResponse ingredientResponse) {
-       ingredientAdpater.setIngredients(ingredientResponse.getIngredients());
-       ingredientAdpater.notifyDataSetChanged();
+        searchAdapter.updateList(ingredientResponse.getIngredients());
+        list.scrollToPosition(0);
     }
 
     @Override
     public void showArea(AreaResponse areaResponse) {
-        countryAdapter.setCountries(areaResponse.getCountries());
-        countryAdapter.notifyDataSetChanged();
+        searchAdapter.updateList(areaResponse.getCountries());
+        list.scrollToPosition(0);
+    }
+
+    @Override
+    public void showCategoryMeals(MealResponse mealResponse) {
+        searchAdapter.updateList(mealResponse.getMeals());
+        list.scrollToPosition(0);
+    }
+
+    @Override
+    public void showAreaMeals(MealResponse mealResponse) {
+        searchAdapter.updateList(mealResponse.getMeals());
+        list.scrollToPosition(0);
+    }
+
+    @Override
+    public void showIngMeals(MealResponse mealResponse) {
+        searchAdapter.updateList(mealResponse.getMeals());
+        list.scrollToPosition(0);
     }
 
     @Override
     public void showError(String err) {
         Log.i(TAG, "showError: " + err);
+    }
+
+    @Override
+    public void onFilterCategoryImgClick(String name) {
+        searchPresenter.getCategoryMeal(name);
+    }
+
+    @Override
+    public void onFilterAreaImgClick(String name) {
+        searchPresenter.getAreaMeal(name);
+    }
+
+    @Override
+    public void onFilterIngredientImgClick(String name) {
+        searchPresenter.getIngredientMeals(name);
     }
 }

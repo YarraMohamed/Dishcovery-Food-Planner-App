@@ -98,4 +98,48 @@ public class MealRemoteDataSource {
            }
        });
     }
+
+    public void getCategoryMeals(NetworkCallback networkCallback , String name){
+        Call<MealResponse> call = mealService.getMealsByCategory(name);
+        call.enqueue(new Callback<MealResponse>() {
+            @Override
+            public void onResponse(Call<MealResponse> call, Response<MealResponse> response) {
+                networkCallback.onShowCategoryMeals(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<MealResponse> call, Throwable throwable) {
+                networkCallback.onFailure(throwable.getMessage());
+            }
+        });
+    }
+
+    public void getAreaMeals(NetworkCallback networkCallback, String name){
+        Call<MealResponse> call = mealService.getMealsByArea(name);
+        call.enqueue(new Callback<MealResponse>() {
+            @Override
+            public void onResponse(Call<MealResponse> call, Response<MealResponse> response) {
+                networkCallback.onShowAreaMeals(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<MealResponse> call, Throwable throwable) {
+                networkCallback.onFailure(throwable.getMessage());
+            }
+        });
+    }
+
+    public void getIngMeals(NetworkCallback networkCallback, String name){
+        Call<MealResponse> call = mealService.getMealsByIngredient(name);
+        call.enqueue(new Callback<MealResponse>() {
+            @Override
+            public void onResponse(Call<MealResponse> call, Response<MealResponse> response) {
+                networkCallback.onShowIngMeals(response.body());
+            }
+            @Override
+            public void onFailure(Call<MealResponse> call, Throwable throwable) {
+                networkCallback.onFailure(throwable.getMessage());
+            }
+        });
+    }
 }

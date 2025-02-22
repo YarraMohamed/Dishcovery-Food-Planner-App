@@ -37,4 +37,14 @@ public class Repository {
    public void getCountry(NetworkCallback networkCallback){
        mealRemoteDataSource.getAreas(networkCallback);
    }
+
+   public void getCategoryMeals(NetworkCallback networkCallback , String name){
+       mealRemoteDataSource.getCategoryMeals(networkCallback,name);
+   }
+   public void getAreaMeals(NetworkCallback networkCallback, String name){
+       mealRemoteDataSource.getAreaMeals(networkCallback,name);
+   }
+   public void getIngMeals(NetworkCallback networkCallback, String name){
+       mealRemoteDataSource.getIngMeals(networkCallback,name);
+   }
 }
