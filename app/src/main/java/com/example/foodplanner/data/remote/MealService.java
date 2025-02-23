@@ -27,4 +27,7 @@ public interface MealService {
     @GET("api/json/v1/1/filter.php")
     Call<MealResponse> getMealsByIngredient(@Query("i") String ingredient);
 
+    @GET("/api/json/v1/1/search.php")
+    Call<MealResponse> getMealByName(@Query("s")String mealName);
+
 }

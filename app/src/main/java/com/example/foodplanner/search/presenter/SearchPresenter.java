@@ -71,6 +71,11 @@ public class SearchPresenter implements NetworkCallback {
     }
 
     @Override
+    public void onShowMealByName(MealResponse mealResponse) {
+
+    }
+
+    @Override
     public void onFailure(String errMsg) {
         searchViewInterface.showError(errMsg);
     }

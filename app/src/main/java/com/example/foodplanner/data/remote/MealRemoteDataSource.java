@@ -142,4 +142,19 @@ public class MealRemoteDataSource {
             }
         });
     }
+
+    public void getMealByName(MealNetworkCallback networkCallback, String mealName){
+        Call<MealResponse> call = mealService.getMealByName(mealName);
+        call.enqueue(new Callback<MealResponse>() {
+            @Override
+            public void onResponse(Call<MealResponse> call, Response<MealResponse> response) {
+                networkCallback.onShowMealByName(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<MealResponse> call, Throwable throwable) {
+                networkCallback.onFailure(throwable.getMessage());
+            }
+        });
+    }
 }

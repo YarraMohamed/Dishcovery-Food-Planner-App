@@ -16,12 +16,12 @@ import com.example.foodplanner.model.Test;
 
 import java.util.List;
 
-public class itemsAdpater extends RecyclerView.Adapter<itemsAdpater.ViewHolder>{
+public class ItemsAdpater extends RecyclerView.Adapter<ItemsAdpater.ViewHolder>{
     private Context context;
     private List<Test> ing;
 
 
-    public itemsAdpater(Context context,List<Test> ing){
+    public ItemsAdpater(Context context, List<Test> ing){
         this.context=context;
         this.ing=ing;
     }

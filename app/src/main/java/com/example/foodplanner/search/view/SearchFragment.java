@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,6 +17,7 @@ import android.view.ViewGroup;
 import com.example.foodplanner.R;
 import com.example.foodplanner.data.Repository;
 import com.example.foodplanner.data.remote.MealRemoteDataSource;
+import com.example.foodplanner.home.view.HomeFragmentDirections;
 import com.example.foodplanner.home.view.HomeListAdapter;
 import com.example.foodplanner.model.AreaResponse;
 import com.example.foodplanner.model.CategoryResponse;
@@ -139,5 +141,13 @@ public class SearchFragment extends Fragment  implements SearchViewInterface , F
     @Override
     public void onFilterIngredientImgClick(String name) {
         searchPresenter.getIngredientMeals(name);
+    }
+
+    @Override
+    public void onItemIgmClick(String mealName) {
+        SearchFragmentDirections.ActionSearchFragmentToItemFragment action =
+                SearchFragmentDirections.actionSearchFragmentToItemFragment();
+        action.setMealName(mealName);
+        Navigation.findNavController(requireView()).navigate(action);
     }
 }

@@ -83,8 +83,9 @@ public class SearchAdapter<T> extends RecyclerView.Adapter<SearchAdapter.ViewHol
                     .load(((Meal) item).getMealThumb())
                     .apply(new RequestOptions().override(200,200))
                     .into(holder.mealPhoto);
-        }else {
-            return;
+            holder.mealPhoto.setOnClickListener(v -> {
+                filtersClickListener.onItemIgmClick(((Meal) item).getMealName());
+            });
         }
     }
 

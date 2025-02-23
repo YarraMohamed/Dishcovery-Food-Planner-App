@@ -24,9 +24,11 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHo
 
     private Context context;
     private MealResponse mealResponse;
+    private ItemClickListener itemClickListener;
     private static final String TAG = "HomeListAdapter";
-    public HomeListAdapter(Context context){
+    public HomeListAdapter(Context context,ItemClickListener itemClickListener){
         this.context=context;
+        this.itemClickListener=itemClickListener;
     }
 
     @Override
@@ -44,6 +46,9 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHo
         Glide.with(context).load(mealResponse.getMeals().get(position).getMealThumb())
                 .apply(new RequestOptions().override(200,200))
                 .into(holder.mealPhoto);
+        holder.mealPhoto.setOnClickListener(v -> {
+            itemClickListener.onImgClick(mealResponse.getMeals().get(position).getMealName());
+        });
     }
 
     @Override

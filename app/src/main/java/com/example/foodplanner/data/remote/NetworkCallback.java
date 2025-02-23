@@ -14,5 +14,6 @@ public interface NetworkCallback {
     public void onShowCategoryMeals(MealResponse mealResponse);
     public void onShowAreaMeals(MealResponse mealResponse);
     public void onShowIngMeals(MealResponse mealResponse);
+    public void onShowMealByName(MealResponse mealResponse);
     public void onFailure(String errMsg);
 }

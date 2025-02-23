@@ -1,5 +1,6 @@
 package com.example.foodplanner.data;
 
+import com.example.foodplanner.data.remote.MealNetworkCallback;
 import com.example.foodplanner.data.remote.MealRemoteDataSource;
 import com.example.foodplanner.data.remote.NetworkCallback;
 
@@ -46,5 +47,9 @@ public class Repository {
    }
    public void getIngMeals(NetworkCallback networkCallback, String name){
        mealRemoteDataSource.getIngMeals(networkCallback,name);
+   }
+
+   public void getMealByName(MealNetworkCallback networkCallback, String mealName){
+       mealRemoteDataSource.getMealByName(networkCallback,mealName);
    }
 }

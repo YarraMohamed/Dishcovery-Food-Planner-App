@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,7 +27,7 @@ import com.example.foodplanner.model.Test;
 
 import java.util.List;
 
-public class HomeFragment extends Fragment implements HomeViewInterface {
+public class HomeFragment extends Fragment implements HomeViewInterface, ItemClickListener {
 
     private static final String TAG = "HomeFragment";
     private HomePresenter homePresenter;
@@ -61,13 +62,27 @@ public class HomeFragment extends Fragment implements HomeViewInterface {
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         manager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerView.setLayoutManager(manager);
-        homeListAdapter = new HomeListAdapter(getActivity());
+        homeListAdapter = new HomeListAdapter(getActivity(),this);
         MealPhoto = view.findViewById(R.id.MealPhoto);
 
         MealName = view.findViewById(R.id.MealName);
         homePresenter = new HomePresenter(this, Repository.getRepoInstance(new MealRemoteDataSource()));
         homePresenter.getRandomMeal();
         homePresenter.getSuggestedMeals();
+
+        MealPhoto.setOnClickListener(v -> {
+            HomeFragmentDirections.ActionHomeFragmentToItemFragment action =
+                    HomeFragmentDirections.actionHomeFragmentToItemFragment();
+            action.setMealName(MealName.getText().toString());
+            Navigation.findNavController(view).navigate(action);
+        });
+
+        MealPhoto.setOnClickListener(v -> {
+            HomeFragmentDirections.ActionHomeFragmentToItemFragment action =
+                    HomeFragmentDirections.actionHomeFragmentToItemFragment();
+            action.setMealName(MealName.getText().toString());
+            Navigation.findNavController(requireView()).navigate(action);
+        });
     }
 
     @Override
@@ -78,6 +93,7 @@ public class HomeFragment extends Fragment implements HomeViewInterface {
                     .apply(new RequestOptions().override(200,200))
                     .into(MealPhoto);
         }
+
     }
 
     @Override
@@ -91,5 +107,13 @@ public class HomeFragment extends Fragment implements HomeViewInterface {
     @Override
     public void showError(String err) {
 
+    }
+
+    @Override
+    public void onImgClick(String mealName) {
+        HomeFragmentDirections.ActionHomeFragmentToItemFragment action =
+                HomeFragmentDirections.actionHomeFragmentToItemFragment();
+        action.setMealName(mealName);
+        Navigation.findNavController(requireView()).navigate(action);
     }
 }

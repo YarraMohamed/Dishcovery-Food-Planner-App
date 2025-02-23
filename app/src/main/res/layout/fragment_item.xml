@@ -11,7 +11,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/itemLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingBottom="30dp">
 
         <ImageView
             android:id="@+id/logo"
@@ -56,20 +57,18 @@
                 android:id="@+id/itemImg"
                 android:layout_width="180dp"
                 android:layout_height="210dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/fried_salmon_steak_cooked_green_600nw_2489026949" />
+                android:scaleType="centerCrop"/>
 
             <TextView
                 android:id="@+id/itemName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="130dp"
+                android:layout_height="100dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginStart="80dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="10dp"
                 android:fontFamily="@font/montserrat_bold"
-                android:text="@string/meal_name"
                 android:textColor="@color/white"
-                android:textSize="24sp" />
+                android:textSize="22sp" />
 
             <TextView
                 android:id="@+id/itemCategory"
@@ -77,11 +76,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal|center_vertical"
                 android:layout_marginStart="70dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="30dp"
                 android:drawableLeft="@drawable/category_logo"
                 android:drawablePadding="5dp"
                 android:fontFamily="@font/montserrat_regular"
-                android:text="@string/category"
                 android:textColor="@color/white"
                 android:textSize="20sp" />
 
@@ -91,11 +89,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="70dp"
-                android:layout_marginTop="55dp"
+                android:layout_marginTop="65dp"
                 android:drawableLeft="@drawable/flag_logo"
                 android:drawablePadding="5dp"
                 android:fontFamily="@font/montserrat_regular"
-                android:text="@string/country"
+
                 android:textColor="@color/white"
                 android:textSize="20sp" />
 
@@ -141,12 +139,11 @@
             android:id="@+id/instructionsTxt"
             android:layout_width="340dp"
             android:layout_height="wrap_content"
-
             android:fontFamily="@font/montserrat_regular"
-            android:text="@string/text_test"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="@+id/instructions"
-            app:layout_constraintTop_toBottomOf="@+id/instructions" />
+            app:layout_constraintTop_toBottomOf="@+id/instructions"
+            android:lineSpacingExtra="2dp"/>
 
         <TextView
             android:id="@+id/Video"
@@ -159,8 +156,8 @@
             app:layout_constraintTop_toBottomOf="@+id/instructionsTxt" />
 
         <FrameLayout
-            android:layout_width="370dp"
-            android:layout_height="210dp"
+            android:layout_width="350dp"
+            android:layout_height="200dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -170,7 +167,8 @@
             <WebView
                 android:id="@+id/videoWebView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+                android:layout_marginBottom="40dp"/>
         </FrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
