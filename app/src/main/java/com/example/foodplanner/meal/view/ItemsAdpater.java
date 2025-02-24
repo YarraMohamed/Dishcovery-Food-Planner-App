@@ -11,19 +11,32 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.foodplanner.R;
+import com.example.foodplanner.model.IngredientDetails;
 import com.example.foodplanner.model.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ItemsAdpater extends RecyclerView.Adapter<ItemsAdpater.ViewHolder>{
     private Context context;
-    private List<Test> ing;
+    private List<IngredientDetails> ing;
 
 
-    public ItemsAdpater(Context context, List<Test> ing){
+    public ItemsAdpater(Context context){
         this.context=context;
-        this.ing=ing;
+        ing = new ArrayList<>();
+    }
+
+    public List<IngredientDetails> getIng() {
+        return ing;
+    }
+
+    public void setIng(List<IngredientDetails> ing) {
+        this.ing = ing;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -39,7 +52,9 @@ public class ItemsAdpater extends RecyclerView.Adapter<ItemsAdpater.ViewHolder>{
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.ItemSamllTitle.setText(ing.get(position).getName());
         holder.itemMeseaure.setText(ing.get(position).getMeasures());
-        holder.itemImage.setImageResource(R.drawable.tomato);
+        Glide.with(context).load("https://www.themealdb.com/images/ingredients/" +ing.get(position).getName() + "-Small.png")
+                .apply(new RequestOptions().optionalCircleCrop().override(80,80))
+                .into(holder.itemImage);
     }
 
     @Override

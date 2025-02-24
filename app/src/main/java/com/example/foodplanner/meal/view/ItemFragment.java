@@ -23,8 +23,11 @@ import com.example.foodplanner.R;
 import com.example.foodplanner.data.Repository;
 import com.example.foodplanner.data.remote.MealRemoteDataSource;
 import com.example.foodplanner.meal.presenter.ItemPresenter;
+import com.example.foodplanner.model.IngredientDetails;
+import com.example.foodplanner.model.Meal;
 import com.example.foodplanner.model.MealResponse;
 import com.example.foodplanner.model.Test;
+import com.example.foodplanner.presenter.Presenter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,12 +36,15 @@ import java.util.List;
 public class ItemFragment extends Fragment implements ItemViewInterface {
 
     private ItemsAdpater itemsAdpater;
-    List<Test> ing;
+    private Meal currentMeal;
+    private Presenter presenter;
+    private List<IngredientDetails> ing;
     private RecyclerView ingredientsRecycle;
     private ItemPresenter itemPresenter;
     private TextView itemName,itemCategory, itemCountry,instructionsTxt;
-    private ImageView itemImg;
+    private ImageView itemImg,favIcon;
     private WebView videoWebView;
+
     public ItemFragment() {
         // Required empty public constructor
     }
@@ -59,18 +65,6 @@ public class ItemFragment extends Fragment implements ItemViewInterface {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ing = new ArrayList<>(Arrays.asList(
-                new Test("test meal 1","2kg "),
-                new Test("test meal 2","2kg "),
-                new Test("test meal 3","2kg "),
-                new Test("test meal 4","2kg "),
-                new Test("test meal 5","2kg "),
-                new Test("test meal 6","2kg "),
-                new Test("test meal 7","2kg "),
-                new Test("test meal 8","2kg "),
-                new Test("test meal 9","2kg "),
-                new Test("test meal 10","2kg ")
-        ));
 
         ingredientsRecycle = view.findViewById(R.id.ingredientsRecycle);
         ingredientsRecycle.setHasFixedSize(true);
@@ -78,7 +72,7 @@ public class ItemFragment extends Fragment implements ItemViewInterface {
         manager.setOrientation(LinearLayoutManager.HORIZONTAL);
         ingredientsRecycle.setLayoutManager(manager);
 
-        itemsAdpater = new ItemsAdpater(getContext(),ing);
+        itemsAdpater = new ItemsAdpater(getContext());
         ingredientsRecycle.setAdapter(itemsAdpater);
 
         itemName = view.findViewById(R.id.itemName);
@@ -87,6 +81,7 @@ public class ItemFragment extends Fragment implements ItemViewInterface {
         itemImg = view.findViewById(R.id.itemImg);
         instructionsTxt = view.findViewById(R.id.instructionsTxt);
         videoWebView = view.findViewById(R.id.videoWebView);
+        favIcon = view.findViewById(R.id.favIcon);
 
         itemPresenter = new ItemPresenter(this,
                 Repository.getRepoInstance(new MealRemoteDataSource()));
@@ -101,20 +96,26 @@ public class ItemFragment extends Fragment implements ItemViewInterface {
     @Override
     public void getMeal(MealResponse mealResponse) {
         if(isAdded() && mealResponse!=null && mealResponse.getMeals()!=null && !mealResponse.getMeals().isEmpty()){
+            currentMeal = mealResponse.getMeals().get(0);
+
             itemName.setText(mealResponse.getMeals().get(0).getMealName());
             itemCategory.setText(mealResponse.getMeals().get(0).getCategory());
             itemCountry.setText(mealResponse.getMeals().get(0).getArea());
             instructionsTxt.setText(itemPresenter.getInstructions(mealResponse.getMeals().get(0).getInstructions()));
+
             String videoUrl = mealResponse.getMeals().get(0).getYoutubeLink();
             if (!videoUrl.equals("")) {
                 videoUrl = videoUrl.replace("watch?v=", "embed/");
                 videoWebView.getSettings().setJavaScriptEnabled(true);
                 videoWebView.loadUrl(videoUrl);
             }
+
             Glide.with(requireContext())
                     .load(mealResponse.getMeals().get(0).getMealThumb())
                     .apply(new RequestOptions().override(150,150))
                     .into(itemImg);
+
+            itemsAdpater.setIng(mealResponse.getMeals().get(0).getIngredientsList());
         }
     }
 

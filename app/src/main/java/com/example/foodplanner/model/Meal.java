@@ -2,6 +2,7 @@ package com.example.foodplanner.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -509,5 +510,29 @@ public class Meal {
 
     public void setMeasure20(String measure20) {
         Measure20 = measure20;
+    }
+    public List<IngredientDetails> getIngredientsList() {
+        List<IngredientDetails> ingredients = new ArrayList<>();
+
+        try {
+            for (int i = 1; i <= 20; i++) {
+                Field ingredientField = Meal.class.getDeclaredField("Ingredient" + i);
+                Field measureField = Meal.class.getDeclaredField("Measure" + i);
+
+                ingredientField.setAccessible(true);
+                measureField.setAccessible(true);
+
+                String ingredient = (String) ingredientField.get(this);
+                String measure = (String) measureField.get(this);
+
+                if (ingredient != null && !ingredient.trim().isEmpty()) {
+                    ingredients.add(new IngredientDetails(ingredient,measure));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return ingredients;
     }
 }

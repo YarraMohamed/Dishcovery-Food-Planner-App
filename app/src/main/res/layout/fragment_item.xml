@@ -61,14 +61,15 @@
 
             <TextView
                 android:id="@+id/itemName"
-                android:layout_width="130dp"
+                android:layout_width="150dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginStart="80dp"
+                android:layout_marginStart="90dp"
+                android:gravity="center"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/montserrat_bold"
                 android:textColor="@color/white"
-                android:textSize="22sp" />
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/itemCategory"
@@ -81,7 +82,7 @@
                 android:drawablePadding="5dp"
                 android:fontFamily="@font/montserrat_regular"
                 android:textColor="@color/white"
-                android:textSize="20sp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/itemCountry"
@@ -93,9 +94,8 @@
                 android:drawableLeft="@drawable/flag_logo"
                 android:drawablePadding="5dp"
                 android:fontFamily="@font/montserrat_regular"
-
                 android:textColor="@color/white"
-                android:textSize="20sp" />
+                android:textSize="16sp" />
 
         </com.google.android.material.card.MaterialCardView>
 

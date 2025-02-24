@@ -8,8 +8,8 @@
     android:layout_height="wrap_content">
 
     <com.google.android.material.card.MaterialCardView
-        android:layout_width="130dp"
-        android:layout_height="150dp"
+        android:layout_width="150dp"
+        android:layout_height="190dp"
         android:layout_marginTop="5dp"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="16dp"
@@ -22,18 +22,21 @@
 
         <ImageView
             android:id="@+id/itemImage"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_gravity="center_horizontal"
             android:scaleType="fitCenter"
+            android:layout_marginTop="10dp"
             app:srcCompat="@drawable/tomato" />
 
         <TextView
             android:id="@+id/ItemSamllTitle"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_gravity="center_horizontal|center_vertical"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="23dp"
+            android:textAlignment="center"
+            android:gravity="center"
             android:fontFamily="@font/montserrat_bold"
             android:text="@string/meal_name"
             android:textColor="@color/dark_red"
@@ -42,11 +45,14 @@
         <TextView
             android:id="@+id/itemMeseaure"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
+            android:textAlignment="center"
+            android:gravity="center"
             android:layout_gravity="bottom|center"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="8dp"
             android:fontFamily="@font/montserrat_regular"
             android:text="@string/_2_kg"
+            android:layout_marginStart="2dp"
             android:textColor="@color/dark_red"
             android:textSize="16sp" />
     </com.google.android.material.card.MaterialCardView>
