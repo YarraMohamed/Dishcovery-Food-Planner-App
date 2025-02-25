@@ -11,18 +11,24 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.foodplanner.R;
+import com.example.foodplanner.model.FavMeals;
 import com.example.foodplanner.model.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FavouritesListAdapter extends RecyclerView.Adapter<FavouritesListAdapter.ViewHolder> {
     private Context context;
-    private List<Test> favs;
+    private List<FavMeals> favs;
+    private RemoveClickListener removeClickListener;
 
-    public FavouritesListAdapter(Context context,List<Test> favs){
+    public FavouritesListAdapter(Context context,RemoveClickListener removeClickListener){
         this.context=context;
-        this.favs=favs;
+        this.favs = new ArrayList<>();
+        this.removeClickListener = removeClickListener;
     }
 
     @NonNull
@@ -36,11 +42,31 @@ public class FavouritesListAdapter extends RecyclerView.Adapter<FavouritesListAd
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        FavMeals favMeal = favs.get(position);
+        holder.favTitle.setText(favMeal.getMealName());
+        holder.countryTxt.setText(favMeal.getMealCountry());
+        holder.categoryTxt.setText(favMeal.getMealCategory());
+        Glide.with(context).load(favMeal.getMealThumb())
+                .apply(new RequestOptions().override(150,150))
+                .into(holder.favImg);
+//        holder.favImg.setImageResource(R.drawable.fried_salmon_steak_cooked_green_600nw_2489026949);
+//        holder.favTitle.setText(favs.get(position).getName());
+//        holder.categoryTxt.setText(favs.get(position).getCategory());
+//        holder.countryTxt.setText(favs.get(position).getCountry());
+
         holder.deleteAction.setImageResource(R.drawable.delete_logo);
-        holder.favImg.setImageResource(R.drawable.fried_salmon_steak_cooked_green_600nw_2489026949);
-        holder.favTitle.setText(favs.get(position).getName());
-        holder.categoryTxt.setText(favs.get(position).getCategory());
-        holder.countryTxt.setText(favs.get(position).getCountry());
+        holder.deleteAction.setOnClickListener(v -> {
+            removeClickListener.onRemoveClick(favMeal);
+        });
+    }
+
+    public List<FavMeals> getFavs() {
+        return favs;
+    }
+
+    public void setFavs(List<FavMeals> favs) {
+        this.favs = favs;
+        notifyDataSetChanged();
     }
 
     @Override

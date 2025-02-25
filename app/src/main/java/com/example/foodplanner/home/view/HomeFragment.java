@@ -20,6 +20,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.foodplanner.R;
 import com.example.foodplanner.data.Repository;
+import com.example.foodplanner.data.local.MealLocalDataSource;
 import com.example.foodplanner.data.remote.MealRemoteDataSource;
 import com.example.foodplanner.home.presenter.HomePresenter;
 import com.example.foodplanner.model.MealResponse;
@@ -66,7 +67,10 @@ public class HomeFragment extends Fragment implements HomeViewInterface, ItemCli
         MealPhoto = view.findViewById(R.id.MealPhoto);
 
         MealName = view.findViewById(R.id.MealName);
-        homePresenter = new HomePresenter(this, Repository.getRepoInstance(new MealRemoteDataSource()));
+        homePresenter = new HomePresenter(this,
+                Repository.getRepoInstance(new MealRemoteDataSource(),
+                        new MealLocalDataSource(requireContext())));
+
         homePresenter.getRandomMeal();
         homePresenter.getSuggestedMeals();
 

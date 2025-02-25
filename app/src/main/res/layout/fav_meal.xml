@@ -9,8 +9,8 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/itemMealCard"
-        android:layout_width="358dp"
-        android:layout_height="179dp"
+        android:layout_width="370dp"
+        android:layout_height="185dp"
         app:cardBackgroundColor="@color/dark_red_opacity"
         android:elevation="4dp"
         app:cardCornerRadius="20dp"
@@ -27,11 +27,11 @@
 
         <TextView
             android:id="@+id/favTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="140dp"
+            android:layout_height="75dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginStart="45dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginStart="55dp"
+            android:layout_marginTop="20dp"
             android:fontFamily="@font/montserrat_bold"
             android:text="@string/meal_name"
             android:textColor="@color/white"
@@ -39,11 +39,11 @@
 
         <TextView
             android:id="@+id/categoryTxt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="140dp"
+            android:layout_height="25dp"
             android:layout_gravity="center_horizontal|center_vertical"
-            android:layout_marginStart="45dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginStart="55dp"
+            android:layout_marginTop="30dp"
             android:drawableLeft="@drawable/category_logo"
             android:drawablePadding="5dp"
             android:fontFamily="@font/montserrat_regular"
@@ -53,11 +53,11 @@
 
         <TextView
             android:id="@+id/countryTxt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="140dp"
+            android:layout_height="25dp"
             android:layout_gravity="center"
-            android:layout_marginStart="42dp"
-            android:layout_marginTop="45dp"
+            android:layout_marginStart="55dp"
+            android:layout_marginTop="60dp"
             android:drawableLeft="@drawable/flag_logo"
             android:drawablePadding="5dp"
             android:fontFamily="@font/montserrat_regular"
@@ -67,8 +67,8 @@
 
         <ImageView
             android:id="@+id/deletAction"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_gravity="end"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="15dp"

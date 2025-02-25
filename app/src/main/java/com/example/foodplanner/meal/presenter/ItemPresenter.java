@@ -3,7 +3,11 @@ package com.example.foodplanner.meal.presenter;
 import com.example.foodplanner.data.Repository;
 import com.example.foodplanner.data.remote.MealNetworkCallback;
 import com.example.foodplanner.meal.view.ItemViewInterface;
+import com.example.foodplanner.model.FavMeals;
 import com.example.foodplanner.model.MealResponse;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class ItemPresenter implements MealNetworkCallback{
     private Repository repo;
@@ -42,5 +46,12 @@ public class ItemPresenter implements MealNetworkCallback{
     public void onFailure(String errMsg) {
         itemViewInterface.showError(errMsg);
 
+    }
+
+    public void addToFav(FavMeals favMeal){
+        repo.addToFav(favMeal)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
     }
 }

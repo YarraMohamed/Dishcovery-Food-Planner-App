@@ -16,15 +16,19 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.foodplanner.R;
 import com.example.foodplanner.data.Repository;
+import com.example.foodplanner.data.local.MealLocalDataSource;
 import com.example.foodplanner.data.remote.MealRemoteDataSource;
 import com.example.foodplanner.meal.presenter.ItemPresenter;
+import com.example.foodplanner.model.FavMeals;
 import com.example.foodplanner.model.IngredientDetails;
 import com.example.foodplanner.model.Meal;
+import com.example.foodplanner.model.MealConverter;
 import com.example.foodplanner.model.MealResponse;
 import com.example.foodplanner.model.Test;
 import com.example.foodplanner.presenter.Presenter;
@@ -84,13 +88,25 @@ public class ItemFragment extends Fragment implements ItemViewInterface {
         favIcon = view.findViewById(R.id.favIcon);
 
         itemPresenter = new ItemPresenter(this,
-                Repository.getRepoInstance(new MealRemoteDataSource()));
+                Repository.getRepoInstance(new MealRemoteDataSource(),
+                        new MealLocalDataSource(requireContext())));
+        presenter = new Presenter();
 
         String mealName = ItemFragmentArgs.fromBundle(getArguments()).getMealName();
         Log.i("Item", "onViewCreated: " + mealName);
         if(!mealName.isEmpty() || !mealName.equals("") || mealName!=null){
             itemPresenter.getMeal(mealName);
         }
+
+        favIcon.setOnClickListener(v -> {
+            if(currentMeal!=null &&presenter.checkAuth()){
+                onClickFav(currentMeal);
+                Toast.makeText(requireContext(),"Added to Favourites",Toast.LENGTH_SHORT).show();
+            }else{
+                Log.i("TAG", "CurrentMeal: " + currentMeal +"CheckAuth: "+ !presenter.checkAuth());
+                Toast.makeText(requireContext(),"Something is wrong",Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -122,5 +138,10 @@ public class ItemFragment extends Fragment implements ItemViewInterface {
     @Override
     public void showError(String err) {
         Log.i("TAG", "showError: " + err);
+    }
+
+    public void onClickFav(Meal meal){
+        FavMeals favMeal = MealConverter.mealToFavMeal(meal);
+        itemPresenter.addToFav(favMeal);
     }
 }

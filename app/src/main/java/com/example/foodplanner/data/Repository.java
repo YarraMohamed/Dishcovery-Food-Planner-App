@@ -1,20 +1,29 @@
 package com.example.foodplanner.data;
 
+import com.example.foodplanner.data.local.MealLocalDataSource;
 import com.example.foodplanner.data.remote.MealNetworkCallback;
 import com.example.foodplanner.data.remote.MealRemoteDataSource;
 import com.example.foodplanner.data.remote.NetworkCallback;
+import com.example.foodplanner.model.FavMeals;
+
+import java.util.List;
+
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Observable;
 
 public class Repository {
    private MealRemoteDataSource mealRemoteDataSource;
+   private MealLocalDataSource mealLocalDataSource;
    private static Repository instance = null;
 
-   private Repository(MealRemoteDataSource mealRemoteDataSource){
+   private Repository(MealRemoteDataSource mealRemoteDataSource , MealLocalDataSource mealLocalDataSource){
        this.mealRemoteDataSource=mealRemoteDataSource;
+       this.mealLocalDataSource = mealLocalDataSource;
    }
 
-   public static Repository getRepoInstance(MealRemoteDataSource mealRemoteDataSource){
+   public static Repository getRepoInstance(MealRemoteDataSource mealRemoteDataSource , MealLocalDataSource mealLocalDataSource){
        if(instance==null){
-           return new Repository(mealRemoteDataSource);
+           return new Repository(mealRemoteDataSource , mealLocalDataSource);
        }
        return instance;
    }
@@ -51,5 +60,15 @@ public class Repository {
 
    public void getMealByName(MealNetworkCallback networkCallback, String mealName){
        mealRemoteDataSource.getMealByName(networkCallback,mealName);
+   }
+
+   public Completable addToFav(FavMeals favMeal){
+       return mealLocalDataSource.addToFav(favMeal);
+   }
+   public Observable<List<FavMeals>> getStoredFavMeals(){
+       return mealLocalDataSource.getStoredFavMeals();
+   }
+   public Completable removerFromFav(FavMeals favMeal){
+       return mealLocalDataSource.removeFromFav(favMeal);
    }
 }
