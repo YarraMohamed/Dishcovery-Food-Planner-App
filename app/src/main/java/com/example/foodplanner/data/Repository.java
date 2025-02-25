@@ -5,6 +5,7 @@ import com.example.foodplanner.data.remote.MealNetworkCallback;
 import com.example.foodplanner.data.remote.MealRemoteDataSource;
 import com.example.foodplanner.data.remote.NetworkCallback;
 import com.example.foodplanner.model.FavMeals;
+import com.example.foodplanner.model.PlanMeals;
 
 import java.util.List;
 
@@ -71,4 +72,14 @@ public class Repository {
    public Completable removerFromFav(FavMeals favMeal){
        return mealLocalDataSource.removeFromFav(favMeal);
    }
+
+   public Completable addToPlan(PlanMeals planMeal){
+       return mealLocalDataSource.addToPlan(planMeal);
+   }
+   public Completable removeFromPlan(PlanMeals planMeal){
+       return mealLocalDataSource.removeFromPlan(planMeal);
+   }
+    public Observable<List<PlanMeals>> getStoredPlanMealsForDay(String date){
+        return mealLocalDataSource.getStoredPlanMealsForDay(date);
+    }
 }

@@ -12,6 +12,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.foodplanner.R;
 import com.example.foodplanner.model.FavMeals;
@@ -48,7 +49,7 @@ public class FavouritesListAdapter extends RecyclerView.Adapter<FavouritesListAd
         holder.categoryTxt.setText(favMeal.getMealCategory());
         Glide.with(context).load(favMeal.getMealThumb())
                 .apply(new RequestOptions().override(150,150))
-                .error(R.drawable.error_photo)
+                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                 .into(holder.favImg);
 
         holder.deleteAction.setImageResource(R.drawable.delete_logo);

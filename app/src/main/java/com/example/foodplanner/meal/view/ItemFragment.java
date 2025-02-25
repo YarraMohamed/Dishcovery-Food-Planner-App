@@ -1,5 +1,7 @@
 package com.example.foodplanner.meal.view;
 
+import android.app.DatePickerDialog;
+import android.icu.util.Calendar;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -30,12 +32,15 @@ import com.example.foodplanner.model.IngredientDetails;
 import com.example.foodplanner.model.Meal;
 import com.example.foodplanner.model.MealConverter;
 import com.example.foodplanner.model.MealResponse;
+import com.example.foodplanner.model.PlanMeals;
 import com.example.foodplanner.model.Test;
 import com.example.foodplanner.presenter.Presenter;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 public class ItemFragment extends Fragment implements ItemViewInterface {
 
@@ -46,7 +51,7 @@ public class ItemFragment extends Fragment implements ItemViewInterface {
     private RecyclerView ingredientsRecycle;
     private ItemPresenter itemPresenter;
     private TextView itemName,itemCategory, itemCountry,instructionsTxt;
-    private ImageView itemImg,favIcon;
+    private ImageView itemImg,favIcon,calenderIcon;
     private WebView videoWebView;
 
     public ItemFragment() {
@@ -86,6 +91,7 @@ public class ItemFragment extends Fragment implements ItemViewInterface {
         instructionsTxt = view.findViewById(R.id.instructionsTxt);
         videoWebView = view.findViewById(R.id.videoWebView);
         favIcon = view.findViewById(R.id.favIcon);
+        calenderIcon = view.findViewById(R.id.calenderIcon);
 
         itemPresenter = new ItemPresenter(this,
                 Repository.getRepoInstance(new MealRemoteDataSource(),
@@ -106,6 +112,10 @@ public class ItemFragment extends Fragment implements ItemViewInterface {
                 Log.i("TAG", "CurrentMeal: " + currentMeal +"CheckAuth: "+ !presenter.checkAuth());
                 Toast.makeText(requireContext(),"Something is wrong",Toast.LENGTH_SHORT).show();
             }
+        });
+
+        calenderIcon.setOnClickListener(v -> {
+            onClickCalender();
         });
     }
 
@@ -140,8 +150,35 @@ public class ItemFragment extends Fragment implements ItemViewInterface {
         Log.i("TAG", "showError: " + err);
     }
 
-    public void onClickFav(Meal meal){
+    private void onClickFav(Meal meal){
         FavMeals favMeal = MealConverter.mealToFavMeal(meal);
         itemPresenter.addToFav(favMeal);
+    }
+
+    private void onClickCalender() {
+
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(android.widget.DatePicker view, int selectedYear, int selectedMonth, int selectedDayOfMonth) {
+                        Calendar selectedDate = Calendar.getInstance();
+                        selectedDate.set(selectedYear, selectedMonth, selectedDayOfMonth);
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                        String formattedDate = dateFormat.format(selectedDate.getTime());
+                        PlanMeals planMeal= MealConverter.mealToPlanMeal(currentMeal);
+                        planMeal.setDate(formattedDate);
+                        itemPresenter.addToPlan(planMeal);
+
+                        Toast.makeText(getContext(),"Added to plan", Toast.LENGTH_SHORT).show();
+                    }
+                },
+                year, month, day
+        );
+        datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
+        datePickerDialog.show();
     }
 }

@@ -52,4 +52,8 @@ public class MealLocalDataSource {
     public Observable<List<PlanMeals>> getStoredPlanMeals(){
         return planMealsDAO.getStoredPlanMeals();
     }
+
+    public Observable<List<PlanMeals>> getStoredPlanMealsForDay(String date){
+        return planMealsDAO.getMealsForDate(date);
+    }
 }
