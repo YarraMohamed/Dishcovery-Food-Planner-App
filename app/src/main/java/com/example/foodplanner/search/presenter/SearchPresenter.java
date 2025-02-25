@@ -8,6 +8,9 @@ import com.example.foodplanner.model.IngredientResponse;
 import com.example.foodplanner.model.MealResponse;
 import com.example.foodplanner.search.view.SearchViewInterface;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+
 public class SearchPresenter implements NetworkCallback {
     private SearchViewInterface searchViewInterface;
     private Repository repository;
@@ -18,15 +21,36 @@ public class SearchPresenter implements NetworkCallback {
     }
 
     public void getCategories(){
-       repository.getCategories(this);
+        repository.getCategories()
+                .map(item->item.getCategories())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        item-> searchViewInterface.showList(item),
+                        err->searchViewInterface.showError(err.getMessage())
+                );
     }
 
     public void getIngredients(){
-        repository.getIngredinets(this);
+        repository.getIngredients()
+                .map(item->item.getIngredients())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        item->searchViewInterface.showList(item),
+                        err->searchViewInterface.showError(err.getMessage())
+                );
     }
 
     public void getCountries(){
-        repository.getCountry(this);
+        repository.getCountries()
+                .map(item->item.getCountries())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        item->searchViewInterface.showList(item),
+                        err->searchViewInterface.showError(err.getMessage())
+                );
     }
 
     public void getCategoryMeal(String name){
@@ -38,21 +62,6 @@ public class SearchPresenter implements NetworkCallback {
     }
     public void  getIngredientMeals(String name){
         repository.getIngMeals(this,name);
-    }
-
-    @Override
-    public void onShowCategories(CategoryResponse categoryResponse) {
-        searchViewInterface.showCategories(categoryResponse);
-    }
-
-    @Override
-    public void onShowIngredients(IngredientResponse ingredientResponse) {
-        searchViewInterface.showIngredients(ingredientResponse);
-    }
-
-    @Override
-    public void onShowAreas(AreaResponse areaResponse) {
-        searchViewInterface.showArea(areaResponse);
     }
 
     @Override
@@ -70,22 +79,10 @@ public class SearchPresenter implements NetworkCallback {
         searchViewInterface.showIngMeals(mealResponse);
     }
 
-    @Override
-    public void onShowMealByName(MealResponse mealResponse) {
-
-    }
 
     @Override
     public void onFailure(String errMsg) {
         searchViewInterface.showError(errMsg);
     }
-    @Override
-    public void onRandomMealSuccess(MealResponse mealResponse) {
 
-    }
-
-    @Override
-    public void onSuggestedMealSuccess(MealResponse mealResponse) {
-
-    }
 }

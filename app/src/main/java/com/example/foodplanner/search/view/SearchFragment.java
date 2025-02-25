@@ -20,8 +20,11 @@ import com.example.foodplanner.data.local.MealLocalDataSource;
 import com.example.foodplanner.data.remote.MealRemoteDataSource;
 import com.example.foodplanner.home.view.HomeFragmentDirections;
 import com.example.foodplanner.home.view.HomeListAdapter;
+import com.example.foodplanner.model.Area;
 import com.example.foodplanner.model.AreaResponse;
+import com.example.foodplanner.model.Category;
 import com.example.foodplanner.model.CategoryResponse;
+import com.example.foodplanner.model.Ingredient;
 import com.example.foodplanner.model.IngredientResponse;
 import com.example.foodplanner.model.MealResponse;
 import com.example.foodplanner.model.Test;
@@ -31,7 +34,7 @@ import com.google.android.material.chip.Chip;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchFragment extends Fragment  implements SearchViewInterface , FiltersClickListener{
+public class SearchFragment extends Fragment  implements SearchViewInterface, FiltersClickListener{
 
     private RecyclerView list;
     private SearchPresenter searchPresenter;
@@ -40,7 +43,7 @@ public class SearchFragment extends Fragment  implements SearchViewInterface , F
     private static final String TAG = "SearchFragment";
 
     public SearchFragment() {
-        // Required empty public constructor
+
     }
 
     @Override
@@ -90,21 +93,11 @@ public class SearchFragment extends Fragment  implements SearchViewInterface , F
     }
 
     @Override
-    public void showCategories(CategoryResponse categoryResponse) {
-        searchAdapter.updateList(categoryResponse.getCategories());
-        list.scrollToPosition(0);
-    }
-
-    @Override
-    public void showIngredients(IngredientResponse ingredientResponse) {
-        searchAdapter.updateList(ingredientResponse.getIngredients());
-        list.scrollToPosition(0);
-    }
-
-    @Override
-    public void showArea(AreaResponse areaResponse) {
-        searchAdapter.updateList(areaResponse.getCountries());
-        list.scrollToPosition(0);
+    public void showList(List data) {
+        if(isAdded()&&getActivity()!=null){
+            searchAdapter.updateList(data);
+            list.scrollToPosition(0);
+        }
     }
 
     @Override
@@ -124,6 +117,7 @@ public class SearchFragment extends Fragment  implements SearchViewInterface , F
         searchAdapter.updateList(mealResponse.getMeals());
         list.scrollToPosition(0);
     }
+
 
     @Override
     public void showError(String err) {

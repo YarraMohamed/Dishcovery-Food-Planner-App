@@ -4,13 +4,18 @@ import com.example.foodplanner.data.local.MealLocalDataSource;
 import com.example.foodplanner.data.remote.MealNetworkCallback;
 import com.example.foodplanner.data.remote.MealRemoteDataSource;
 import com.example.foodplanner.data.remote.NetworkCallback;
+import com.example.foodplanner.model.AreaResponse;
+import com.example.foodplanner.model.CategoryResponse;
 import com.example.foodplanner.model.FavMeals;
+import com.example.foodplanner.model.IngredientResponse;
+import com.example.foodplanner.model.MealResponse;
 import com.example.foodplanner.model.PlanMeals;
 
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
 
 public class Repository {
    private MealRemoteDataSource mealRemoteDataSource;
@@ -29,25 +34,29 @@ public class Repository {
        return instance;
    }
 
-   public void getRandomMeal(NetworkCallback networkCallback){
-       mealRemoteDataSource.getRandomMealFromNetwork(networkCallback);
+   public Single<MealResponse> getRandomMeal(){
+       return mealRemoteDataSource.getRandomMeal();
    }
 
-   public void getSuggestedMeals(NetworkCallback networkCallback){
-       mealRemoteDataSource.getSuggestedMealsFromNetwork(networkCallback);
+   public Single<MealResponse> getSuggestedMeals(){
+       return mealRemoteDataSource.getSuggestedMeals();
    }
 
-   public void getCategories(NetworkCallback networkCallback){
-       mealRemoteDataSource.getCategories(networkCallback);
+   public Single<CategoryResponse> getCategories(){
+       return mealRemoteDataSource.getCategories();
    }
 
-   public void getIngredinets(NetworkCallback networkCallback){
-       mealRemoteDataSource.getIngredients(networkCallback);
+   public Single<IngredientResponse> getIngredients(){
+       return mealRemoteDataSource.getIngredients();
    }
 
-   public void getCountry(NetworkCallback networkCallback){
-       mealRemoteDataSource.getAreas(networkCallback);
+   public Single<AreaResponse> getCountries(){
+       return mealRemoteDataSource.getCountries();
    }
+
+//   public void getCountry(NetworkCallback networkCallback){
+//       mealRemoteDataSource.getAreas(networkCallback);
+//   }
 
    public void getCategoryMeals(NetworkCallback networkCallback , String name){
        mealRemoteDataSource.getCategoryMeals(networkCallback,name);
@@ -81,5 +90,9 @@ public class Repository {
    }
     public Observable<List<PlanMeals>> getStoredPlanMealsForDay(String date){
         return mealLocalDataSource.getStoredPlanMealsForDay(date);
+    }
+
+    public Observable<List<PlanMeals>> getAllStoredPlanMeals(){
+       return mealLocalDataSource.getStoredPlanMeals();
     }
 }

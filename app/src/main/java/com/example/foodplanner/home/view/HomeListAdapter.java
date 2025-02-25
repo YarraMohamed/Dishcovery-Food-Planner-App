@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.foodplanner.R;
+import com.example.foodplanner.model.Meal;
 import com.example.foodplanner.model.MealResponse;
 import com.example.foodplanner.model.Test;
 
@@ -23,7 +24,7 @@ import java.util.List;
 public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHolder> {
 
     private Context context;
-    private MealResponse mealResponse;
+    private List<Meal> Meals;
     private ItemClickListener itemClickListener;
     private static final String TAG = "HomeListAdapter";
     public HomeListAdapter(Context context,ItemClickListener itemClickListener){
@@ -42,26 +43,27 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.mealNameHome.setText(mealResponse.getMeals().get(position).getMealName());
-        Glide.with(context).load(mealResponse.getMeals().get(position).getMealThumb())
+        holder.mealNameHome.setText(Meals.get(position).getMealName());
+        Glide.with(context).load(Meals.get(position).getMealThumb())
                 .apply(new RequestOptions().override(200,200))
                 .into(holder.mealPhoto);
         holder.mealPhoto.setOnClickListener(v -> {
-            itemClickListener.onImgClick(mealResponse.getMeals().get(position).getMealName());
+            itemClickListener.onImgClick(Meals.get(position).getMealName());
         });
     }
 
     @Override
     public int getItemCount() {
-        return mealResponse.getMeals().size();
+        return Meals.size();
     }
 
-    public MealResponse getMealResponse() {
-        return mealResponse;
+    public List<Meal> getMeals() {
+        return Meals;
     }
 
-    public void setMealResponse(MealResponse mealResponse) {
-        this.mealResponse = mealResponse;
+    public void setMeals(List<Meal> meals) {
+        Meals = meals;
+        notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

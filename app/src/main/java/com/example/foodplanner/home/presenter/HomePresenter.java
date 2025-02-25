@@ -8,7 +8,10 @@ import com.example.foodplanner.model.CategoryResponse;
 import com.example.foodplanner.model.IngredientResponse;
 import com.example.foodplanner.model.MealResponse;
 
-public class HomePresenter implements NetworkCallback {
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+
+public class HomePresenter {
     private Repository repository;
     HomeViewInterface homeViewInterface;
 
@@ -18,61 +21,25 @@ public class HomePresenter implements NetworkCallback {
     }
 
     public void getRandomMeal(){
-        repository.getRandomMeal(this);
+        repository.getRandomMeal()
+                .map(item->item.getMeals().get(0))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        item->homeViewInterface.showRandomMeal(item),
+                        err->homeViewInterface.showError(err.getMessage())
+                );
     }
 
     public void getSuggestedMeals(){
-        repository.getSuggestedMeals(this);
-    }
-
-    @Override
-    public void onRandomMealSuccess(MealResponse mealResponse) {
-        homeViewInterface.showRandomMeal(mealResponse);
-    }
-
-    @Override
-    public void onSuggestedMealSuccess(MealResponse mealResponse) {
-        homeViewInterface.showSuggestedMeal(mealResponse);
-    }
-
-    @Override
-    public void onFailure(String errMsg) {
-        homeViewInterface.showError(errMsg);
-    }
-
-    @Override
-    public void onShowMealByName(MealResponse mealResponse) {
-
-    }
-
-    @Override
-    public void onShowCategories(CategoryResponse categoryResponse) {
-
-    }
-
-    @Override
-    public void onShowIngredients(IngredientResponse ingredientResponse) {
-
-    }
-
-    @Override
-    public void onShowAreas(AreaResponse areaResponse) {
-
-    }
-
-    @Override
-    public void onShowCategoryMeals(MealResponse mealResponse) {
-
-    }
-
-    @Override
-    public void onShowAreaMeals(MealResponse mealResponse) {
-
-    }
-
-    @Override
-    public void onShowIngMeals(MealResponse mealResponse) {
-
+        repository.getSuggestedMeals()
+                .map(item->item.getMeals())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        item -> homeViewInterface.showSuggestedMeal(item),
+                        err -> homeViewInterface.showError(err.getMessage())
+                );
     }
 
 }

@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -23,6 +24,7 @@ import com.example.foodplanner.data.Repository;
 import com.example.foodplanner.data.local.MealLocalDataSource;
 import com.example.foodplanner.data.remote.MealRemoteDataSource;
 import com.example.foodplanner.home.presenter.HomePresenter;
+import com.example.foodplanner.model.Meal;
 import com.example.foodplanner.model.MealResponse;
 import com.example.foodplanner.model.Test;
 
@@ -80,37 +82,30 @@ public class HomeFragment extends Fragment implements HomeViewInterface, ItemCli
             action.setMealName(MealName.getText().toString());
             Navigation.findNavController(view).navigate(action);
         });
-
-        MealPhoto.setOnClickListener(v -> {
-            HomeFragmentDirections.ActionHomeFragmentToItemFragment action =
-                    HomeFragmentDirections.actionHomeFragmentToItemFragment();
-            action.setMealName(MealName.getText().toString());
-            Navigation.findNavController(requireView()).navigate(action);
-        });
     }
 
     @Override
-    public void showRandomMeal(MealResponse mealResponse) {
-        if(isAdded() && getActivity()!=null){
-            MealName.setText(mealResponse.getMeals().get(0).getMealName());
-            Glide.with(requireContext()).load(mealResponse.getMeals().get(0).getMealThumb())
+    public void showRandomMeal(Meal meal) {
+        if(isAdded()&&getActivity()!=null){
+            MealName.setText(meal.getMealName());
+            Glide.with(requireContext()).load(meal.getMealThumb())
                     .apply(new RequestOptions().override(200,200))
                     .into(MealPhoto);
         }
-
     }
 
     @Override
-    public void showSuggestedMeal(MealResponse mealResponse) {
-        Log.i(TAG, "showSuggestedMeal: " + mealResponse.getMeals().size());
-        homeListAdapter.setMealResponse(mealResponse);
+    public void showSuggestedMeal(List<Meal> meals) {
+        homeListAdapter.setMeals(meals);
         recyclerView.setAdapter(homeListAdapter);
         homeListAdapter.notifyDataSetChanged();
+
     }
+
 
     @Override
     public void showError(String err) {
-
+        Toast.makeText(requireContext(),"Something went wrong",Toast.LENGTH_SHORT).show();
     }
 
     @Override
