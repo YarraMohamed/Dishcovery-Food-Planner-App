@@ -50,7 +50,7 @@ public class ScheduleFragment extends Fragment {
         loginAnim= view.findViewById(R.id.loginAnim);
         loginAlert = view.findViewById(R.id.loginAlert);
         divider = view.findViewById(R.id.divider3);
-        plannedMealName = view.findViewById(R.id.plannedMealName);
+        //plannedMealName = view.findViewById(R.id.plannedMealName);
 
         calendarView = view.findViewById(R.id.Calender);
         calendarView.setCurrentDate(CalendarDay.today());

@@ -15,8 +15,6 @@ public class MealConverter {
         return new PlanMeals(
                 meal.getIdMeal(),
                 meal.getMealName(),
-                meal.getArea(),
-                meal.getCategory(),
                 meal.getMealThumb()
         );
     }

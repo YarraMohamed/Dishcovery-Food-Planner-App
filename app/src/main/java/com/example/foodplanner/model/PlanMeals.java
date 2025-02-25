@@ -12,18 +12,14 @@ public class PlanMeals {
     @NonNull
     String mealID;
     String mealName;
-    String mealCountry;
-    String mealCategory;
     String mealThumb;
     String date;
 
     public PlanMeals(){}
 
-    public PlanMeals(String mealID, String mealName, String mealCountry, String mealCategory, String mealThumb) {
+    public PlanMeals(String mealID, String mealName, String mealThumb) {
         this.mealID = mealID;
         this.mealName = mealName;
-        this.mealCountry = mealCountry;
-        this.mealCategory = mealCategory;
         this.mealThumb = mealThumb;
     }
 
@@ -41,22 +37,6 @@ public class PlanMeals {
 
     public void setMealName(String mealName) {
         this.mealName = mealName;
-    }
-
-    public String getMealCountry() {
-        return mealCountry;
-    }
-
-    public void setMealCountry(String mealCountry) {
-        this.mealCountry = mealCountry;
-    }
-
-    public String getMealCategory() {
-        return mealCategory;
-    }
-
-    public void setMealCategory(String mealCategory) {
-        this.mealCategory = mealCategory;
     }
 
     public String getMealThumb() {

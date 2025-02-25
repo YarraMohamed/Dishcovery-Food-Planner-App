@@ -48,11 +48,8 @@ public class FavouritesListAdapter extends RecyclerView.Adapter<FavouritesListAd
         holder.categoryTxt.setText(favMeal.getMealCategory());
         Glide.with(context).load(favMeal.getMealThumb())
                 .apply(new RequestOptions().override(150,150))
+                .error(R.drawable.error_photo)
                 .into(holder.favImg);
-//        holder.favImg.setImageResource(R.drawable.fried_salmon_steak_cooked_green_600nw_2489026949);
-//        holder.favTitle.setText(favs.get(position).getName());
-//        holder.categoryTxt.setText(favs.get(position).getCategory());
-//        holder.countryTxt.setText(favs.get(position).getCountry());
 
         holder.deleteAction.setImageResource(R.drawable.delete_logo);
         holder.deleteAction.setOnClickListener(v -> {
