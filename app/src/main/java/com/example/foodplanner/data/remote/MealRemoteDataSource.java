@@ -43,77 +43,19 @@ public class MealRemoteDataSource {
         return mealService.getAreas();
     }
 
-//    public void getAreas(NetworkCallback networkCallback){
-//       Call<AreaResponse> call = mealService.getAreas();
-//       call.enqueue(new Callback<AreaResponse>() {
-//           @Override
-//           public void onResponse(Call<AreaResponse> call, Response<AreaResponse> response) {
-//               networkCallback.onShowAreas(response.body());
-//           }
-//
-//           @Override
-//           public void onFailure(Call<AreaResponse> call, Throwable throwable) {
-//               networkCallback.onFailure(throwable.getMessage());
-//           }
-//       });
-//    }
-
-    public void getCategoryMeals(NetworkCallback networkCallback , String name){
-        Call<MealResponse> call = mealService.getMealsByCategory(name);
-        call.enqueue(new Callback<MealResponse>() {
-            @Override
-            public void onResponse(Call<MealResponse> call, Response<MealResponse> response) {
-                networkCallback.onShowCategoryMeals(response.body());
-            }
-
-            @Override
-            public void onFailure(Call<MealResponse> call, Throwable throwable) {
-                networkCallback.onFailure(throwable.getMessage());
-            }
-        });
+    public Single<MealResponse> getCategoryMeals(String category){
+        return mealService.getMealsByCategory(category);
     }
 
-    public void getAreaMeals(NetworkCallback networkCallback, String name){
-        Call<MealResponse> call = mealService.getMealsByArea(name);
-        call.enqueue(new Callback<MealResponse>() {
-            @Override
-            public void onResponse(Call<MealResponse> call, Response<MealResponse> response) {
-                networkCallback.onShowAreaMeals(response.body());
-            }
-
-            @Override
-            public void onFailure(Call<MealResponse> call, Throwable throwable) {
-                networkCallback.onFailure(throwable.getMessage());
-            }
-        });
+    public Single<MealResponse> getAreaMeals(String country){
+        return mealService.getMealsByArea(country);
     }
 
-    public void getIngMeals(NetworkCallback networkCallback, String name){
-        Call<MealResponse> call = mealService.getMealsByIngredient(name);
-        call.enqueue(new Callback<MealResponse>() {
-            @Override
-            public void onResponse(Call<MealResponse> call, Response<MealResponse> response) {
-                networkCallback.onShowIngMeals(response.body());
-            }
-            @Override
-            public void onFailure(Call<MealResponse> call, Throwable throwable) {
-                networkCallback.onFailure(throwable.getMessage());
-            }
-        });
+    public Single<MealResponse> getIngredientsMeals(String ingredient){
+        return mealService.getMealsByIngredient(ingredient);
     }
 
-    public void getMealByName(MealNetworkCallback networkCallback, String mealName){
-        Call<MealResponse> call = mealService.getMealByName(mealName);
-        call.enqueue(new Callback<MealResponse>() {
-            @Override
-            public void onResponse(Call<MealResponse> call, Response<MealResponse> response) {
-                networkCallback.onShowMealByName(response.body());
-            }
-
-            @Override
-            public void onFailure(Call<MealResponse> call, Throwable throwable) {
-                networkCallback.onFailure(throwable.getMessage());
-            }
-        });
+    public Single<MealResponse> getMealByMeal(String name){
+        return mealService.getMealByName(name);
     }
 }

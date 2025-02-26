@@ -123,29 +123,30 @@ public class ItemFragment extends Fragment implements ItemViewInterface {
     }
 
     @Override
-    public void getMeal(MealResponse mealResponse) {
-        if(isAdded() && mealResponse!=null && mealResponse.getMeals()!=null && !mealResponse.getMeals().isEmpty()){
-            currentMeal = mealResponse.getMeals().get(0);
+    public void getMeal(Meal meal) {
+        if(isAdded() && meal!=null){
+            currentMeal = meal;
+            itemName.setText(meal.getMealName());
+            itemCategory.setText(meal.getCategory());
+            itemCountry.setText(meal.getArea());
+            instructionsTxt.setText(itemPresenter.getInstructions(meal.getInstructions()));
+            String videoURL = meal.getYoutubeLink();
 
-            itemName.setText(mealResponse.getMeals().get(0).getMealName());
-            itemCategory.setText(mealResponse.getMeals().get(0).getCategory());
-            itemCountry.setText(mealResponse.getMeals().get(0).getArea());
-            instructionsTxt.setText(itemPresenter.getInstructions(mealResponse.getMeals().get(0).getInstructions()));
-
-            String videoUrl = mealResponse.getMeals().get(0).getYoutubeLink();
-            if (!videoUrl.equals("")) {
-                videoUrl = videoUrl.replace("watch?v=", "embed/");
+            if(!videoURL.equals("")){
+                videoURL = videoURL.replace("watch?v=", "embed/");
                 videoWebView.getSettings().setJavaScriptEnabled(true);
-                videoWebView.loadUrl(videoUrl);
+                videoWebView.loadUrl(videoURL);
             }
 
             Glide.with(requireContext())
-                    .load(mealResponse.getMeals().get(0).getMealThumb())
+                    .load(meal.getMealThumb())
                     .apply(new RequestOptions().override(150,150))
                     .into(itemImg);
 
-            itemsAdpater.setIng(mealResponse.getMeals().get(0).getIngredientsList());
+            itemsAdpater.setIng(meal.getIngredientsList());
+
         }
+
     }
 
     @Override

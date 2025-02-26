@@ -1,17 +1,12 @@
 package com.example.foodplanner.search.presenter;
 
 import com.example.foodplanner.data.Repository;
-import com.example.foodplanner.data.remote.NetworkCallback;
-import com.example.foodplanner.model.AreaResponse;
-import com.example.foodplanner.model.CategoryResponse;
-import com.example.foodplanner.model.IngredientResponse;
-import com.example.foodplanner.model.MealResponse;
 import com.example.foodplanner.search.view.SearchViewInterface;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class SearchPresenter implements NetworkCallback {
+public class SearchPresenter {
     private SearchViewInterface searchViewInterface;
     private Repository repository;
 
@@ -53,36 +48,47 @@ public class SearchPresenter implements NetworkCallback {
                 );
     }
 
-    public void getCategoryMeal(String name){
-        repository.getCategoryMeals(this,name);
+    public void getMealsByCategory(String category){
+        repository.getCategoryMeals(category)
+                .map(item->item.getMeals())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                  item->searchViewInterface.showList(item),
+                  err->searchViewInterface.showError(err.getMessage())
+                );
     }
 
-    public void getAreaMeal(String name){
-        repository.getAreaMeals(this,name);
-    }
-    public void  getIngredientMeals(String name){
-        repository.getIngMeals(this,name);
-    }
-
-    @Override
-    public void onShowCategoryMeals(MealResponse mealResponse) {
-        searchViewInterface.showCategoryMeals(mealResponse);
-    }
-
-    @Override
-    public void onShowAreaMeals(MealResponse mealResponse) {
-        searchViewInterface.showAreaMeals(mealResponse);
+    public void getMealsByCountry(String country){
+        repository.getAreaMeals(country)
+                .map(item->item.getMeals())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        item->searchViewInterface.showList(item),
+                        err->searchViewInterface.showError(err.getMessage())
+                );
     }
 
-    @Override
-    public void onShowIngMeals(MealResponse mealResponse) {
-        searchViewInterface.showIngMeals(mealResponse);
+    public void getMealsByIngredient(String ingredient){
+        repository.getIngredientMeals(ingredient)
+                .map(item->item.getMeals())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        item->searchViewInterface.showList(item),
+                        err->searchViewInterface.showError(err.getMessage())
+                );
     }
 
 
-    @Override
-    public void onFailure(String errMsg) {
-        searchViewInterface.showError(errMsg);
-    }
+
+//    public void getAreaMeal(String name){
+//        repository.getAreaMeals(this,name);
+//    }
+//    public void  getIngredientMeals(String name){
+//        repository.getIngMeals(this,name);
+//    }
+
 
 }

@@ -1,9 +1,7 @@
 package com.example.foodplanner.data;
 
 import com.example.foodplanner.data.local.MealLocalDataSource;
-import com.example.foodplanner.data.remote.MealNetworkCallback;
 import com.example.foodplanner.data.remote.MealRemoteDataSource;
-import com.example.foodplanner.data.remote.NetworkCallback;
 import com.example.foodplanner.model.AreaResponse;
 import com.example.foodplanner.model.CategoryResponse;
 import com.example.foodplanner.model.FavMeals;
@@ -54,23 +52,21 @@ public class Repository {
        return mealRemoteDataSource.getCountries();
    }
 
-//   public void getCountry(NetworkCallback networkCallback){
-//       mealRemoteDataSource.getAreas(networkCallback);
-//   }
+    public Single<MealResponse> getCategoryMeals(String category){
+        return mealRemoteDataSource.getCategoryMeals(category);
+    }
 
-   public void getCategoryMeals(NetworkCallback networkCallback , String name){
-       mealRemoteDataSource.getCategoryMeals(networkCallback,name);
-   }
-   public void getAreaMeals(NetworkCallback networkCallback, String name){
-       mealRemoteDataSource.getAreaMeals(networkCallback,name);
-   }
-   public void getIngMeals(NetworkCallback networkCallback, String name){
-       mealRemoteDataSource.getIngMeals(networkCallback,name);
-   }
+    public Single<MealResponse> getAreaMeals(String country){
+       return mealRemoteDataSource.getAreaMeals(country);
+    }
 
-   public void getMealByName(MealNetworkCallback networkCallback, String mealName){
-       mealRemoteDataSource.getMealByName(networkCallback,mealName);
-   }
+    public Single<MealResponse> getIngredientMeals(String ingredient){
+       return mealRemoteDataSource.getIngredientsMeals(ingredient);
+    }
+
+    public Single<MealResponse> getMealByName(String name){
+       return mealRemoteDataSource.getMealByMeal(name);
+    }
 
    public Completable addToFav(FavMeals favMeal){
        return mealLocalDataSource.addToFav(favMeal);

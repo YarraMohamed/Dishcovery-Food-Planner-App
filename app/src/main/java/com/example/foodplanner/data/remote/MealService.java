@@ -24,13 +24,12 @@ public interface MealService {
     @GET("api/json/v1/1/list.php?a=list")
     Single<AreaResponse> getAreas();
     @GET("api/json/v1/1/filter.php")
-    Call<MealResponse> getMealsByCategory(@Query("c") String category);
+    Single<MealResponse> getMealsByCategory(@Query("c") String category);
     @GET("api/json/v1/1/filter.php")
-    Call<MealResponse> getMealsByArea(@Query("a") String Area);
+    Single<MealResponse> getMealsByArea(@Query("a") String Area);
     @GET("api/json/v1/1/filter.php")
-    Call<MealResponse> getMealsByIngredient(@Query("i") String ingredient);
-
+    Single<MealResponse> getMealsByIngredient(@Query("i") String ingredient);
     @GET("/api/json/v1/1/search.php")
-    Call<MealResponse> getMealByName(@Query("s")String mealName);
+    Single<MealResponse> getMealByName(@Query("s")String mealName);
 
 }

@@ -1,12 +1,7 @@
 package com.example.foodplanner.home.presenter;
 
 import com.example.foodplanner.data.Repository;
-import com.example.foodplanner.data.remote.NetworkCallback;
 import com.example.foodplanner.home.view.HomeViewInterface;
-import com.example.foodplanner.model.AreaResponse;
-import com.example.foodplanner.model.CategoryResponse;
-import com.example.foodplanner.model.IngredientResponse;
-import com.example.foodplanner.model.MealResponse;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.schedulers.Schedulers;

@@ -101,42 +101,23 @@ public class SearchFragment extends Fragment  implements SearchViewInterface, Fi
     }
 
     @Override
-    public void showCategoryMeals(MealResponse mealResponse) {
-        searchAdapter.updateList(mealResponse.getMeals());
-        list.scrollToPosition(0);
-    }
-
-    @Override
-    public void showAreaMeals(MealResponse mealResponse) {
-        searchAdapter.updateList(mealResponse.getMeals());
-        list.scrollToPosition(0);
-    }
-
-    @Override
-    public void showIngMeals(MealResponse mealResponse) {
-        searchAdapter.updateList(mealResponse.getMeals());
-        list.scrollToPosition(0);
-    }
-
-
-    @Override
     public void showError(String err) {
         Log.i(TAG, "showError: " + err);
     }
 
     @Override
     public void onFilterCategoryImgClick(String name) {
-        searchPresenter.getCategoryMeal(name);
+        searchPresenter.getMealsByCategory(name);
     }
 
     @Override
     public void onFilterAreaImgClick(String name) {
-        searchPresenter.getAreaMeal(name);
+        searchPresenter.getMealsByCountry(name);
     }
 
     @Override
     public void onFilterIngredientImgClick(String name) {
-        searchPresenter.getIngredientMeals(name);
+        searchPresenter.getMealsByIngredient(name);
     }
 
     @Override

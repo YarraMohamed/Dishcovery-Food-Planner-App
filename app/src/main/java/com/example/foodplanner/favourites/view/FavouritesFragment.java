@@ -84,10 +84,8 @@ public class FavouritesFragment extends Fragment implements  FavouritesViewInter
     public void showFavourites(List<FavMeals> favMeals) {
         favouritesListAdapter.setFavs(favMeals);
         favouritesListAdapter.notifyDataSetChanged();
-        if(!favMeals.isEmpty()){
-            Favourites.setVisibility(View.VISIBLE);
-            emptyAnim.setVisibility(View.GONE);
-        }else if(favMeals.isEmpty() && presenter.checkAuth()){
+
+         if(favMeals.isEmpty() && presenter.checkAuth()){
             Favourites.setVisibility(View.GONE);
             emptyAnim.setVisibility(View.VISIBLE);
         }else if(!presenter.checkAuth() && favMeals.isEmpty()){

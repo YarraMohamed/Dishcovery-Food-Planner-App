@@ -12,8 +12,8 @@ import java.util.List;
 
 public interface SearchViewInterface<T> {
     public void showList(List<T> data);
-    public void showCategoryMeals(MealResponse mealResponse);
-    public void showAreaMeals(MealResponse mealResponse);
-    public void showIngMeals(MealResponse mealResponse);
+//    public void showCategoryMeals(MealResponse mealResponse);
+//    public void showAreaMeals(MealResponse mealResponse);
+//    public void showIngMeals(MealResponse mealResponse);
     public void  showError(String err);
 }
