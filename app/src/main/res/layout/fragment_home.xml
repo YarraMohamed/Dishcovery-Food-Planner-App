@@ -15,81 +15,110 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView2"
-        style="@style/Header"
+        android:id="@+id/connectionTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="10dp"
-        android:text="@string/meal_of_the_day"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logo" />
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="28dp"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="@string/please_check_your_interner_connection"
+        android:textColor="@color/dark_red"
+        android:textSize="28sp"
+        app:layout_constraintStart_toStartOf="@+id/noConnection"
+        app:layout_constraintTop_toBottomOf="@+id/noConnection"
+        android:visibility="gone"/>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/MealCard"
-        android:layout_width="378dp"
-        android:layout_height="273dp"
-        android:layout_marginStart="17dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="17dp"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="4dp"
-        app:cardUseCompatPadding="false"
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/noConnection"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        android:layout_marginTop="164dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2">
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_rawRes="@raw/no_connection"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        android:visibility="gone"/>
 
-        <ImageView
-            android:id="@+id/MealPhoto"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            />
 
         <TextView
-            android:id="@+id/MealName"
-            style="@style/textAboveBG"
+            android:id="@+id/textView2"
+            style="@style/Header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center"
-            android:background="@drawable/text_bg_screens"
-            android:textAlignment="center" />
-    </androidx.cardview.widget.CardView>
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/meal_of_the_day"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/logo" />
 
-    <View
-        android:id="@+id/divider2"
-        android:layout_width="326dp"
-        android:layout_height="1dp"
-        android:layout_marginStart="17dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="17dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/MealCard" />
+        <androidx.cardview.widget.CardView
+            android:id="@+id/MealCard"
+            android:layout_width="378dp"
+            android:layout_height="273dp"
+            android:layout_marginStart="17dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="17dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp"
+            app:cardUseCompatPadding="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView2">
 
-    <TextView
-        android:id="@+id/textView9"
-        style="@style/Header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="15dp"
-        android:text="@string/suggested_meals"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider2" />
+            <ImageView
+                android:id="@+id/MealPhoto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="70dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView9"
-        app:layout_constraintVertical_bias="0.111" />
+            <TextView
+                android:id="@+id/MealName"
+                style="@style/textAboveBG"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center"
+                android:background="@drawable/text_bg_screens"
+                android:textAlignment="center" />
+        </androidx.cardview.widget.CardView>
+
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="326dp"
+            android:layout_height="1dp"
+            android:layout_marginStart="17dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="17dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/MealCard" />
+
+        <TextView
+            android:id="@+id/textView9"
+            style="@style/Header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="15dp"
+            android:text="@string/suggested_meals"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider2" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="70dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView9"
+            app:layout_constraintVertical_bias="0.111" />
 </androidx.constraintlayout.widget.ConstraintLayout>

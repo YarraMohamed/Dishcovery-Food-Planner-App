@@ -16,7 +16,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.foodplanner.R;
 import com.example.foodplanner.data.Repository;
 import com.example.foodplanner.data.local.MealLocalDataSource;
@@ -31,7 +33,10 @@ import com.example.foodplanner.model.Ingredient;
 import com.example.foodplanner.model.IngredientResponse;
 import com.example.foodplanner.model.MealResponse;
 import com.example.foodplanner.model.Test;
+import com.example.foodplanner.presenter.NetworkConnection;
+import com.example.foodplanner.presenter.NetworkPresenter;
 import com.example.foodplanner.search.presenter.SearchPresenter;
+import com.example.foodplanner.view.NetworkInterface;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
@@ -44,7 +49,7 @@ import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.ObservableEmitter;
 import io.reactivex.rxjava3.disposables.Disposable;
 
-public class SearchFragment extends Fragment  implements SearchViewInterface, FiltersClickListener{
+public class SearchFragment extends Fragment  implements SearchViewInterface, FiltersClickListener, NetworkInterface {
 
     private RecyclerView list;
     private SearchPresenter searchPresenter;
@@ -56,7 +61,10 @@ public class SearchFragment extends Fragment  implements SearchViewInterface, Fi
     private boolean isCountryChecked;
     private boolean isIngredientChecked;
     private String selectedFilterName;
-    private Disposable disposable;
+    private ChipGroup chipGroup;
+    private LottieAnimationView noConnection;
+    private TextView connectionTxt;
+    private NetworkPresenter networkPresenter;
     public SearchFragment() {
 
     }
@@ -77,6 +85,9 @@ public class SearchFragment extends Fragment  implements SearchViewInterface, Fi
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        chipGroup = view.findViewById(R.id.chipGroup);
+        noConnection = view.findViewById(R.id.noConnection);
+        connectionTxt = view.findViewById(R.id.connectionTxt);
         searchTxt = view.findViewById(R.id.searchTxt);
         categoryChip = view.findViewById(R.id.categoryChip);
         countryChip = view.findViewById(R.id.countryChip);
@@ -90,6 +101,9 @@ public class SearchFragment extends Fragment  implements SearchViewInterface, Fi
         searchPresenter = new SearchPresenter(this,
                 Repository.getRepoInstance(new MealRemoteDataSource(),
                         new MealLocalDataSource(requireContext())));
+        networkPresenter = new NetworkPresenter(this,
+                new NetworkConnection(requireContext()));
+        networkPresenter.startListening();
 
         searchAdapter = new SearchAdapter(getContext(),this);
         list.setAdapter(searchAdapter);
@@ -135,6 +149,12 @@ public class SearchFragment extends Fragment  implements SearchViewInterface, Fi
                 .subscribe(
                         text->viewSearchResults(text)
                 );
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        networkPresenter.stopListening();
     }
 
     private void viewSearchResults(String key){
@@ -193,5 +213,25 @@ public class SearchFragment extends Fragment  implements SearchViewInterface, Fi
                 SearchFragmentDirections.actionSearchFragmentToItemFragment();
         action.setMealName(mealName);
         Navigation.findNavController(requireView()).navigate(action);
+    }
+
+    @Override
+    public void onNetworkAvaliable() {
+        searchTxt.setVisibility(View.VISIBLE);
+        list.setVisibility(View.VISIBLE);
+        chipGroup.setVisibility(View.VISIBLE);
+        connectionTxt.setVisibility(View.GONE);
+        noConnection.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onNetworkLost() {
+        searchTxt.setVisibility(View.GONE);
+        list.setVisibility(View.GONE);
+        chipGroup.setVisibility(View.GONE);
+        connectionTxt.setVisibility(View.VISIBLE);
+        noConnection.setVisibility(View.VISIBLE
+        );
+
     }
 }

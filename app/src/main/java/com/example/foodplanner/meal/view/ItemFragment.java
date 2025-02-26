@@ -15,7 +15,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,14 +30,10 @@ import com.example.foodplanner.model.FavMeals;
 import com.example.foodplanner.model.IngredientDetails;
 import com.example.foodplanner.model.Meal;
 import com.example.foodplanner.model.MealConverter;
-import com.example.foodplanner.model.MealResponse;
 import com.example.foodplanner.model.PlanMeals;
-import com.example.foodplanner.model.Test;
-import com.example.foodplanner.presenter.Presenter;
+import com.example.foodplanner.presenter.UserPresenter;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -46,7 +41,7 @@ public class ItemFragment extends Fragment implements ItemViewInterface {
 
     private ItemsAdpater itemsAdpater;
     private Meal currentMeal;
-    private Presenter presenter;
+    private UserPresenter userPresenter;
     private List<IngredientDetails> ing;
     private RecyclerView ingredientsRecycle;
     private ItemPresenter itemPresenter;
@@ -96,7 +91,7 @@ public class ItemFragment extends Fragment implements ItemViewInterface {
         itemPresenter = new ItemPresenter(this,
                 Repository.getRepoInstance(new MealRemoteDataSource(),
                         new MealLocalDataSource(requireContext())));
-        presenter = new Presenter();
+        userPresenter = new UserPresenter();
 
         String mealName = ItemFragmentArgs.fromBundle(getArguments()).getMealName();
         Log.i("Item", "onViewCreated: " + mealName);
@@ -105,7 +100,7 @@ public class ItemFragment extends Fragment implements ItemViewInterface {
         }
 
         favIcon.setOnClickListener(v -> {
-            if(currentMeal!=null &&presenter.checkAuth()){
+            if(currentMeal!=null && userPresenter.checkAuth()){
                 onClickFav(currentMeal);
                 Toast.makeText(requireContext(),"Added to Favourites",Toast.LENGTH_SHORT).show();
             }else{
@@ -114,7 +109,7 @@ public class ItemFragment extends Fragment implements ItemViewInterface {
         });
 
         calenderIcon.setOnClickListener(v -> {
-            if(presenter.checkAuth()){
+            if(userPresenter.checkAuth()){
                 onClickCalender();
             }else{
                 Toast.makeText(requireContext(),"You should login first",Toast.LENGTH_SHORT).show();

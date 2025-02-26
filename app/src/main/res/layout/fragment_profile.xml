@@ -14,6 +14,34 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/connectionTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="28dp"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="@string/please_check_your_interner_connection"
+        android:textColor="@color/dark_red"
+        android:textSize="28sp"
+        app:layout_constraintStart_toStartOf="@+id/noConnection"
+        app:layout_constraintTop_toBottomOf="@+id/noConnection"
+        android:visibility="gone"/>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/noConnection"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        android:layout_marginTop="164dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_rawRes="@raw/no_connection"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        android:visibility="gone"/>
+
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottieAnimationView"
         android:layout_width="250dp"

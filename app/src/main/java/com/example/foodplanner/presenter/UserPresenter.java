@@ -2,10 +2,10 @@ package com.example.foodplanner.presenter;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-public class Presenter {
+public class UserPresenter {
     private FirebaseAuth auth;
 
-    public Presenter(){
+    public UserPresenter(){
         this.auth=FirebaseAuth.getInstance();
     }
     public Boolean checkAuth() {

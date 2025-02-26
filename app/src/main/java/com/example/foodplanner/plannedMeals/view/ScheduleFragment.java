@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CalendarView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,7 +22,7 @@ import com.example.foodplanner.data.local.MealLocalDataSource;
 import com.example.foodplanner.data.remote.MealRemoteDataSource;
 import com.example.foodplanner.model.PlanMeals;
 import com.example.foodplanner.plannedMeals.presenter.PlansPresenter;
-import com.example.foodplanner.presenter.Presenter;
+import com.example.foodplanner.presenter.UserPresenter;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 
@@ -35,7 +34,7 @@ public class ScheduleFragment extends Fragment implements OnRemoveClick, PlansVi
     private TextView loginAlert;
     private LottieAnimationView loginAnim,emptyAnim;
     private View divider;
-    private Presenter presenter;
+    private UserPresenter userPresenter;
     private RecyclerView PlannedList;
     private PlansAdapter plansAdapter;
     private PlansPresenter plansPresenter;
@@ -91,8 +90,8 @@ public class ScheduleFragment extends Fragment implements OnRemoveClick, PlansVi
             }
         });
 
-        presenter = new Presenter();
-        if(presenter.checkAuth()){
+        userPresenter = new UserPresenter();
+        if(userPresenter.checkAuth()){
             calendarView.setVisibility(View.VISIBLE);
             divider.setVisibility(View.VISIBLE);
             loginAnim.setVisibility(View.GONE);

@@ -22,11 +22,8 @@ import com.example.foodplanner.data.local.MealLocalDataSource;
 import com.example.foodplanner.data.remote.MealRemoteDataSource;
 import com.example.foodplanner.favourites.presenter.FavouritesPresenter;
 import com.example.foodplanner.model.FavMeals;
-import com.example.foodplanner.model.Test;
-import com.example.foodplanner.presenter.Presenter;
+import com.example.foodplanner.presenter.UserPresenter;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class FavouritesFragment extends Fragment implements  FavouritesViewInterface , RemoveClickListener{
@@ -34,7 +31,7 @@ public class FavouritesFragment extends Fragment implements  FavouritesViewInter
     private FavouritesListAdapter favouritesListAdapter;
     private RecyclerView Favourites;
     private FavouritesPresenter favouritesPresenter;
-    private Presenter presenter;
+    private UserPresenter userPresenter;
     private LottieAnimationView loginAnim,emptyAnim;
     private TextView loginAlert;
 
@@ -69,7 +66,7 @@ public class FavouritesFragment extends Fragment implements  FavouritesViewInter
         favouritesListAdapter = new FavouritesListAdapter(getContext(),this);
         Favourites.setAdapter(favouritesListAdapter);
 
-        presenter = new Presenter();
+        userPresenter = new UserPresenter();
 
         favouritesPresenter = new FavouritesPresenter(this,
                 Repository.getRepoInstance(new MealRemoteDataSource(),
@@ -85,10 +82,10 @@ public class FavouritesFragment extends Fragment implements  FavouritesViewInter
         favouritesListAdapter.setFavs(favMeals);
         favouritesListAdapter.notifyDataSetChanged();
 
-         if(favMeals.isEmpty() && presenter.checkAuth()){
+         if(favMeals.isEmpty() && userPresenter.checkAuth()){
             Favourites.setVisibility(View.GONE);
             emptyAnim.setVisibility(View.VISIBLE);
-        }else if(!presenter.checkAuth() && favMeals.isEmpty()){
+        }else if(!userPresenter.checkAuth() && favMeals.isEmpty()){
             Favourites.setVisibility(View.GONE);
             emptyAnim.setVisibility(View.GONE);
         }
@@ -118,7 +115,7 @@ public class FavouritesFragment extends Fragment implements  FavouritesViewInter
     }
 
     public void setView(){
-        if(presenter.checkAuth()){
+        if(userPresenter.checkAuth()){
             Favourites.setVisibility(View.VISIBLE);
             loginAnim.setVisibility(View.GONE);
             loginAlert.setVisibility(View.GONE);
