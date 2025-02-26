@@ -9,10 +9,13 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.example.foodplanner.R;
 import com.example.foodplanner.data.Repository;
@@ -30,9 +33,16 @@ import com.example.foodplanner.model.MealResponse;
 import com.example.foodplanner.model.Test;
 import com.example.foodplanner.search.presenter.SearchPresenter;
 import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.ObservableEmitter;
+import io.reactivex.rxjava3.disposables.Disposable;
 
 public class SearchFragment extends Fragment  implements SearchViewInterface, FiltersClickListener{
 
@@ -40,8 +50,13 @@ public class SearchFragment extends Fragment  implements SearchViewInterface, Fi
     private SearchPresenter searchPresenter;
     private SearchAdapter searchAdapter;
     private Chip categoryChip,countryChip,IngredientChip;
+    private EditText searchTxt;
     private static final String TAG = "SearchFragment";
-
+    private boolean isCategoryChecked;
+    private boolean isCountryChecked;
+    private boolean isIngredientChecked;
+    private String selectedFilterName;
+    private Disposable disposable;
     public SearchFragment() {
 
     }
@@ -62,6 +77,7 @@ public class SearchFragment extends Fragment  implements SearchViewInterface, Fi
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        searchTxt = view.findViewById(R.id.searchTxt);
         categoryChip = view.findViewById(R.id.categoryChip);
         countryChip = view.findViewById(R.id.countryChip);
         IngredientChip = view.findViewById(R.id.IngredientChip);
@@ -79,17 +95,56 @@ public class SearchFragment extends Fragment  implements SearchViewInterface, Fi
         list.setAdapter(searchAdapter);
 
         categoryChip.setOnClickListener(v -> {
+            selectedFilterName=null;
+            isCategoryChecked=false;
+            isIngredientChecked=false;
+            isCountryChecked=false;
             searchPresenter.getCategories();;
         });
 
         IngredientChip.setOnClickListener(v -> {
+            selectedFilterName=null;
+            isCategoryChecked=false;
+            isIngredientChecked=false;
+            isCountryChecked=false;
             searchPresenter.getIngredients();
         });
 
         countryChip.setOnClickListener(v -> {
+            selectedFilterName=null;
+            isCategoryChecked=false;
+            isIngredientChecked=false;
+            isCountryChecked=false;
             searchPresenter.getCountries();
         });
 
+        Observable.create((ObservableEmitter<String> emitter) -> {
+                    searchTxt.addTextChangedListener(new TextWatcher() {
+                        @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+                        @Override public void afterTextChanged(Editable s) {}
+
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+                                emitter.onNext(s.toString());
+                        }
+                    });
+                })
+                .debounce(350, TimeUnit.MILLISECONDS)
+                .distinctUntilChanged()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        text->viewSearchResults(text)
+                );
+    }
+
+    private void viewSearchResults(String key){
+         if(isCategoryChecked && categoryChip.isChecked()) searchPresenter.searchForMealInCategory(selectedFilterName,key);
+         else if(isCountryChecked && countryChip.isChecked()) searchPresenter.searchForMealInCountry(selectedFilterName,key);
+         else if(isIngredientChecked && IngredientChip.isChecked()) searchPresenter.searchForMealInIngredient(selectedFilterName,key);
+         else if(categoryChip.isChecked() && !isCountryChecked) searchPresenter.searchForCategory(key);
+         else if(countryChip.isChecked()) searchPresenter.searchForCountry(key);
+         else if(IngredientChip.isChecked()) searchPresenter.searchForIngredient(key);
+         else searchPresenter.searchForMeal(key);
     }
 
     @Override
@@ -108,16 +163,28 @@ public class SearchFragment extends Fragment  implements SearchViewInterface, Fi
     @Override
     public void onFilterCategoryImgClick(String name) {
         searchPresenter.getMealsByCategory(name);
+        selectedFilterName=name;
+        isCategoryChecked=true;
+        isCountryChecked=false;
+        isIngredientChecked=false;
     }
 
     @Override
     public void onFilterAreaImgClick(String name) {
         searchPresenter.getMealsByCountry(name);
+        selectedFilterName=name;
+        isCategoryChecked=false;
+        isCountryChecked=true;
+        isIngredientChecked=false;
     }
 
     @Override
     public void onFilterIngredientImgClick(String name) {
         searchPresenter.getMealsByIngredient(name);
+        selectedFilterName=name;
+        isCategoryChecked=false;
+        isCountryChecked=false;
+        isIngredientChecked=true;
     }
 
     @Override

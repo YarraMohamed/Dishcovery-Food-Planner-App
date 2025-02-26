@@ -77,13 +77,13 @@
         <item name="android:gravity">center</item>
     </style>
 
-    <style name="Chip">
+    <style name="Chip" parent="">
         <item name="android:textColor">@color/dark_red</item>
         <item name="android:textSize">14sp</item>
         <item name="chipStrokeColor">@color/dark_red</item>
         <item name="chipStrokeWidth">1dp</item>
         <item name="android:elevation">4dp</item>
-        <item name="android:backgroundTint">@android:color/white</item>
+        <item name="chipBackgroundColor">@color/white</item>
     </style>
 
 </resources>

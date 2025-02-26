@@ -15,7 +15,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editTextText"
+        android:id="@+id/searchTxt"
         android:layout_width="350dp"
         android:layout_height="60dp"
         android:layout_marginTop="20dp"
@@ -26,8 +26,8 @@
         android:fontFamily="@font/montserrat_medium"
         android:inputType="text"
         android:paddingStart="15dp"
-        android:text="@string/search"
-        android:textColor="@color/dark_red"
+        android:hint="@string/search"
+        android:textColorHint="@color/dark_red"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
@@ -42,27 +42,32 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText">
+        app:layout_constraintTop_toBottomOf="@+id/searchTxt"
+        app:singleLine="true"
+        app:singleSelection="true">
 
         <com.google.android.material.chip.Chip
             android:id="@+id/categoryChip"
-            style="@style/Chip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:checkable="true"
+            style="@style/Chip"
             android:text="@string/category" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/countryChip"
-            style="@style/Chip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:checkable="true"
+            style="@style/Chip"
             android:text="@string/country" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/IngredientChip"
-            style="@style/Chip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:checkable="true"
+            style="@style/Chip"
             android:text="@string/Ingredient" />
     </com.google.android.material.chip.ChipGroup>
 
