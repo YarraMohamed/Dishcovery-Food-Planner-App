@@ -109,13 +109,16 @@ public class ItemFragment extends Fragment implements ItemViewInterface {
                 onClickFav(currentMeal);
                 Toast.makeText(requireContext(),"Added to Favourites",Toast.LENGTH_SHORT).show();
             }else{
-                Log.i("TAG", "CurrentMeal: " + currentMeal +"CheckAuth: "+ !presenter.checkAuth());
-                Toast.makeText(requireContext(),"Something is wrong",Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(),"You should login first",Toast.LENGTH_SHORT).show();
             }
         });
 
         calenderIcon.setOnClickListener(v -> {
-            onClickCalender();
+            if(presenter.checkAuth()){
+                onClickCalender();
+            }else{
+                Toast.makeText(requireContext(),"You should login first",Toast.LENGTH_SHORT).show();
+            }
         });
     }
 

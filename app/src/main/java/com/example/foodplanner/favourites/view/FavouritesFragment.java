@@ -87,9 +87,12 @@ public class FavouritesFragment extends Fragment implements  FavouritesViewInter
         if(!favMeals.isEmpty()){
             Favourites.setVisibility(View.VISIBLE);
             emptyAnim.setVisibility(View.GONE);
-        }else{
+        }else if(favMeals.isEmpty() && presenter.checkAuth()){
             Favourites.setVisibility(View.GONE);
             emptyAnim.setVisibility(View.VISIBLE);
+        }else if(!presenter.checkAuth() && favMeals.isEmpty()){
+            Favourites.setVisibility(View.GONE);
+            emptyAnim.setVisibility(View.GONE);
         }
     }
 
@@ -121,10 +124,12 @@ public class FavouritesFragment extends Fragment implements  FavouritesViewInter
             Favourites.setVisibility(View.VISIBLE);
             loginAnim.setVisibility(View.GONE);
             loginAlert.setVisibility(View.GONE);
+            emptyAnim.setVisibility(View.GONE);
         }else{
             Favourites.setVisibility(View.GONE);
             loginAnim.setVisibility(View.VISIBLE);
             loginAlert.setVisibility(View.VISIBLE);
+            emptyAnim.setVisibility(View.GONE);
         }
 
     }
