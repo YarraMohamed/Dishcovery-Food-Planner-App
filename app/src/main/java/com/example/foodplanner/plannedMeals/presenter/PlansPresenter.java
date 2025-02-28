@@ -32,4 +32,11 @@ public class PlansPresenter {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe();
     }
+
+    public void removeUploadedPlanMeal(String userId, PlanMeals planMeal){
+        repository.removeUplodedPlanMeal(userId, planMeal)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
+    }
 }

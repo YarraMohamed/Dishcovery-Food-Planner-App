@@ -14,4 +14,8 @@ public class UserPresenter {
         }
         return false;
     }
+
+    public String getUserID(){
+        return auth.getCurrentUser().getUid();
+    }
 }

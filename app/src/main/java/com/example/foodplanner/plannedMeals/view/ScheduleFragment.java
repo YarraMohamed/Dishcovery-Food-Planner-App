@@ -19,6 +19,7 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.example.foodplanner.R;
 import com.example.foodplanner.data.Repository;
 import com.example.foodplanner.data.local.MealLocalDataSource;
+import com.example.foodplanner.data.remote.MealCloudDataSource;
 import com.example.foodplanner.data.remote.MealRemoteDataSource;
 import com.example.foodplanner.model.PlanMeals;
 import com.example.foodplanner.plannedMeals.presenter.PlansPresenter;
@@ -77,6 +78,7 @@ public class ScheduleFragment extends Fragment implements OnRemoveClick, PlansVi
 
         plansPresenter = new PlansPresenter(this,
                 Repository.getRepoInstance(new MealRemoteDataSource(),
+                        new MealCloudDataSource(),
                         new MealLocalDataSource(requireContext())));
 
         calendarView = view.findViewById(R.id.Calender);
@@ -119,6 +121,7 @@ public class ScheduleFragment extends Fragment implements OnRemoveClick, PlansVi
 
         builder.setPositiveButton("Yes", (dialog, which) -> {
             plansPresenter.removePlan(planMeal);
+            plansPresenter.removeUploadedPlanMeal(userPresenter.getUserID(),planMeal);
             Toast.makeText(getContext(),"Deleted from palns",Toast.LENGTH_SHORT).show();
         });
         builder.setNegativeButton("No", (dialog, which) -> dialog.dismiss());

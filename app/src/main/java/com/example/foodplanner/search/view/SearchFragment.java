@@ -22,6 +22,7 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.example.foodplanner.R;
 import com.example.foodplanner.data.Repository;
 import com.example.foodplanner.data.local.MealLocalDataSource;
+import com.example.foodplanner.data.remote.MealCloudDataSource;
 import com.example.foodplanner.data.remote.MealRemoteDataSource;
 import com.example.foodplanner.home.view.HomeFragmentDirections;
 import com.example.foodplanner.home.view.HomeListAdapter;
@@ -100,6 +101,7 @@ public class SearchFragment extends Fragment  implements SearchViewInterface, Fi
 
         searchPresenter = new SearchPresenter(this,
                 Repository.getRepoInstance(new MealRemoteDataSource(),
+                        new MealCloudDataSource(),
                         new MealLocalDataSource(requireContext())));
         networkPresenter = new NetworkPresenter(this,
                 new NetworkConnection(requireContext()));

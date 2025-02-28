@@ -17,13 +17,17 @@ import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.foodplanner.R;
+import com.example.foodplanner.data.Repository;
+import com.example.foodplanner.data.local.MealLocalDataSource;
+import com.example.foodplanner.data.remote.MealCloudDataSource;
+import com.example.foodplanner.data.remote.MealRemoteDataSource;
 import com.example.foodplanner.presenter.NetworkConnection;
 import com.example.foodplanner.presenter.NetworkPresenter;
 import com.example.foodplanner.profile.presenter.ProfilePresenter;
 import com.example.foodplanner.view.NetworkInterface;
 
 public class ProfileFragment extends Fragment implements ProfileInterface, NetworkInterface {
-    private Button backupBtn,logoutBtn,loginBtn;
+    private Button logoutBtn,loginBtn;
     private TextView nameTxt,textView5,connectionTxt;
     private ProfilePresenter profilePresenter;
     private String username;
@@ -51,12 +55,14 @@ public class ProfileFragment extends Fragment implements ProfileInterface, Netwo
         super.onViewCreated(view, savedInstanceState);
 
         setView(view);
-        backupBtn = view.findViewById(R.id.backupBtn);
         logoutBtn = view.findViewById(R.id.logoutBtn);
         loginBtn = view.findViewById(R.id.loginBtn);
         nameTxt = view.findViewById(R.id.nameTxt);
         profilePresenter = new ProfilePresenter(this,
-                requireContext().getSharedPreferences("credentials",Context.MODE_PRIVATE));
+                requireContext().getSharedPreferences("credentials",Context.MODE_PRIVATE),
+                Repository.getRepoInstance(new MealRemoteDataSource(),
+                        new MealCloudDataSource(),
+                        new MealLocalDataSource(requireContext())));
 
         networkPresenter = new NetworkPresenter(this,
                 new NetworkConnection(requireContext()));
@@ -69,6 +75,7 @@ public class ProfileFragment extends Fragment implements ProfileInterface, Netwo
         loginBtn.setOnClickListener(v -> {
             Navigation.findNavController(view).navigate(R.id.action_profileFragment_to_loginFragment);
         });
+
 
     }
 
@@ -97,9 +104,18 @@ public class ProfileFragment extends Fragment implements ProfileInterface, Netwo
     }
 
     @Override
+    public void onSuccessBackup() {
+        Toast.makeText(getContext(),"Backup Success",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void OnFailureBackup() {
+        Toast.makeText(getContext(),"Backup Failed",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     public void onNetworkAvaliable() {
         if(profilePresenter.checkAuth()){
-            backupBtn.setVisibility(Button.GONE);
             logoutBtn.setVisibility(Button.GONE);
             loginBtn.setVisibility(Button.VISIBLE);
             lottieAnimationView.setVisibility(View.VISIBLE);
@@ -109,7 +125,6 @@ public class ProfileFragment extends Fragment implements ProfileInterface, Netwo
             noConnection.setVisibility(View.GONE);
             connectionTxt.setVisibility(View.GONE);
         }else{
-            backupBtn.setVisibility(Button.VISIBLE);
             logoutBtn.setVisibility(Button.VISIBLE);
             loginBtn.setVisibility(Button.GONE);
             lottieAnimationView.setVisibility(View.VISIBLE);
@@ -122,7 +137,6 @@ public class ProfileFragment extends Fragment implements ProfileInterface, Netwo
 
     @Override
     public void onNetworkLost() {
-        backupBtn.setVisibility(Button.GONE);
         logoutBtn.setVisibility(Button.GONE);
         loginBtn.setVisibility(Button.GONE);
         lottieAnimationView.setVisibility(View.GONE);

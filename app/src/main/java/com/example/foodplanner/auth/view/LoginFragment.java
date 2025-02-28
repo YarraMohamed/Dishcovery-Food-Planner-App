@@ -20,6 +20,10 @@ import android.widget.Toast;
 
 import com.example.foodplanner.R;
 import com.example.foodplanner.auth.presenter.AuthPresenter;
+import com.example.foodplanner.data.Repository;
+import com.example.foodplanner.data.local.MealLocalDataSource;
+import com.example.foodplanner.data.remote.MealCloudDataSource;
+import com.example.foodplanner.data.remote.MealRemoteDataSource;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -61,7 +65,10 @@ public class LoginFragment extends Fragment implements AuthInterface {
         Skip = view.findViewById(R.id.Skip);
 
         authPresenter = new AuthPresenter(this,
-                requireContext().getSharedPreferences("credentials", Context.MODE_PRIVATE));
+                requireContext().getSharedPreferences("credentials", Context.MODE_PRIVATE),
+                Repository.getRepoInstance(new MealRemoteDataSource(),
+                        new MealCloudDataSource(),
+                        new MealLocalDataSource(getContext())));
 
         setGoogleOptions();
 
@@ -84,8 +91,8 @@ public class LoginFragment extends Fragment implements AuthInterface {
             String email = emailtxt.getText().toString().trim();
             String password = passwordTxt.getText().toString().trim();
             authPresenter.Login(email,password);
-
         });
+
     }
 
     public void setGoogleOptions(){

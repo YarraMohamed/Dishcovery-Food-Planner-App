@@ -4,6 +4,7 @@ import com.example.foodplanner.model.AreaResponse;
 import com.example.foodplanner.model.CategoryResponse;
 import com.example.foodplanner.model.IngredientResponse;
 import com.example.foodplanner.model.MealResponse;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory;
 import io.reactivex.rxjava3.core.Single;

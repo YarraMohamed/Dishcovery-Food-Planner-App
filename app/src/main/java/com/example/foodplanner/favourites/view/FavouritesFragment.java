@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,12 +20,17 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.example.foodplanner.R;
 import com.example.foodplanner.data.Repository;
 import com.example.foodplanner.data.local.MealLocalDataSource;
+import com.example.foodplanner.data.remote.MealCloudDataSource;
 import com.example.foodplanner.data.remote.MealRemoteDataSource;
 import com.example.foodplanner.favourites.presenter.FavouritesPresenter;
 import com.example.foodplanner.model.FavMeals;
 import com.example.foodplanner.presenter.UserPresenter;
 
 import java.util.List;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class FavouritesFragment extends Fragment implements  FavouritesViewInterface , RemoveClickListener{
 
@@ -70,17 +76,18 @@ public class FavouritesFragment extends Fragment implements  FavouritesViewInter
 
         favouritesPresenter = new FavouritesPresenter(this,
                 Repository.getRepoInstance(new MealRemoteDataSource(),
+                        new MealCloudDataSource(),
                         new MealLocalDataSource(getContext())));
 
         favouritesPresenter.getStoredFav();
         setView();
-
     }
 
     @Override
     public void showFavourites(List<FavMeals> favMeals) {
         favouritesListAdapter.setFavs(favMeals);
         favouritesListAdapter.notifyDataSetChanged();
+        Log.i("TAG", "size in fav " + favMeals.size());
 
          if(favMeals.isEmpty() && userPresenter.checkAuth()){
             Favourites.setVisibility(View.GONE);
@@ -105,6 +112,7 @@ public class FavouritesFragment extends Fragment implements  FavouritesViewInter
 
         builder.setPositiveButton("Yes", (dialog, which) -> {
             favouritesPresenter.removeFromFav(favMeal);
+            favouritesPresenter.removeUplodedFavMeal(userPresenter.getUserID(),favMeal);
             Toast.makeText(getContext(),"Deleted from favourites",Toast.LENGTH_SHORT).show();
         });
         builder.setNegativeButton("No", (dialog, which) -> dialog.dismiss());

@@ -24,6 +24,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.foodplanner.R;
 import com.example.foodplanner.data.Repository;
 import com.example.foodplanner.data.local.MealLocalDataSource;
+import com.example.foodplanner.data.remote.MealCloudDataSource;
 import com.example.foodplanner.data.remote.MealRemoteDataSource;
 import com.example.foodplanner.meal.presenter.ItemPresenter;
 import com.example.foodplanner.model.FavMeals;
@@ -90,6 +91,7 @@ public class ItemFragment extends Fragment implements ItemViewInterface {
 
         itemPresenter = new ItemPresenter(this,
                 Repository.getRepoInstance(new MealRemoteDataSource(),
+                        new MealCloudDataSource(),
                         new MealLocalDataSource(requireContext())));
         userPresenter = new UserPresenter();
 
@@ -152,6 +154,8 @@ public class ItemFragment extends Fragment implements ItemViewInterface {
     private void onClickFav(Meal meal){
         FavMeals favMeal = MealConverter.mealToFavMeal(meal);
         itemPresenter.addToFav(favMeal);
+        itemPresenter.uploadFavMeal(userPresenter.getUserID(),favMeal);
+        Log.i("TAG", "Item added");
     }
 
     private void onClickCalender() {
@@ -171,6 +175,7 @@ public class ItemFragment extends Fragment implements ItemViewInterface {
                         PlanMeals planMeal= MealConverter.mealToPlanMeal(currentMeal);
                         planMeal.setDate(formattedDate);
                         itemPresenter.addToPlan(planMeal);
+                        itemPresenter.uploadPlanMeal(userPresenter.getUserID(),planMeal);
 
                         Toast.makeText(getContext(),"Added to plan", Toast.LENGTH_SHORT).show();
                     }

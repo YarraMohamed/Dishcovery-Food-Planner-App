@@ -19,7 +19,8 @@ public interface FavMealsDAO {
     public Completable addToFav(FavMeals favMeal);
     @Delete
     public Completable removeFromFav(FavMeals favMeal);
-
+    @Query("DELETE FROM fav_meal")
+    public Completable deleteAllFav();
     @Query("SELECT * FROM fav_meal")
     public Observable<List<FavMeals>> getStoredFavMeals();
 }

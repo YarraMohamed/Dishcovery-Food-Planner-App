@@ -24,4 +24,6 @@ public interface PlanMealsDAO {
     public Observable<List<PlanMeals>> getStoredPlanMeals();
     @Query("SELECT * FROM plan_meals WHERE date = :selectedDate")
     Observable<List<PlanMeals>> getMealsForDate(String selectedDate);
+    @Query("DELETE FROM plan_meals")
+    public Completable deleteAllPlan();
 }

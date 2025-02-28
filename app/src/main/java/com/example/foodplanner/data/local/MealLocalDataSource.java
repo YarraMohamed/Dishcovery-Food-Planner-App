@@ -33,6 +33,7 @@ public class MealLocalDataSource {
     public Completable addToFav(FavMeals favMeal){
         return favMealsDAO.addToFav(favMeal);
     }
+
     public Completable removeFromFav(FavMeals favMeal){
         return favMealsDAO.removeFromFav(favMeal);
     }
@@ -55,5 +56,13 @@ public class MealLocalDataSource {
 
     public Observable<List<PlanMeals>> getStoredPlanMealsForDay(String date){
         return planMealsDAO.getMealsForDate(date);
+    }
+
+    public Completable clearAllFavMeals(){
+        return favMealsDAO.deleteAllFav();
+    }
+
+    public Completable clearAllPlanMeals(){
+        return planMealsDAO.deleteAllPlan();
     }
 }

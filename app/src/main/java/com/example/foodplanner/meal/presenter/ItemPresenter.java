@@ -35,6 +35,13 @@ public class ItemPresenter {
                 .subscribe();
     }
 
+    public void uploadFavMeal(String userId, FavMeals favMeal){
+        repo.uploadFavMeal(userId,favMeal)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
+    }
+
     public void addToPlan(PlanMeals planMeal){
         repo.addToPlan(planMeal)
                 .subscribeOn(Schedulers.io())
@@ -42,6 +49,12 @@ public class ItemPresenter {
                 .subscribe();
     }
 
+    public void uploadPlanMeal(String userId,PlanMeals planMeal){
+        repo.uploadPlanMeal(userId,planMeal)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
+    }
 
     public String getInstructions(String instructions){
 

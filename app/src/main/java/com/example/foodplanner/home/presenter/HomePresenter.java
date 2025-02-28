@@ -4,6 +4,7 @@ import com.example.foodplanner.data.Repository;
 import com.example.foodplanner.home.view.HomeViewInterface;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class HomePresenter {
@@ -36,5 +37,6 @@ public class HomePresenter {
                         err -> homeViewInterface.showError(err.getMessage())
                 );
     }
+
 
 }
